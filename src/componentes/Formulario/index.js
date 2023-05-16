@@ -232,7 +232,7 @@ function Formulario() {
         })
       );
 
-    console.log(jsonList)
+    console.log(jsonList);
 
     axios.post('URL_DA_SUA_API', jsonList)
     .then(response => {
