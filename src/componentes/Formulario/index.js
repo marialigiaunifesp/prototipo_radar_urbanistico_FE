@@ -1,11 +1,16 @@
+/* eslint-disable import/no-extraneous-dependencies */
+/* eslint-disable no-shadow */
+/* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { useState } from "react";
+import axios from 'axios';
 
-const Formulario = () => {
+function Formulario() {
   const [documentoSelecionado, setDocumentoSelecionado] = useState("");
   const [variavelSelecionada, setVariavelSelecionada] = useState("");
   const [inputValues, setInputValues] = useState([]);
   const [inputValue, setInputValue] = useState("");
   const [referencia, setReferencia] = useState("");
+  const [referenciaNotes, setReferenciaNotes] = useState("");
   const [dataDocumento, setDataDocumento] = useState("");
   const [areaAnalise, setAreaAnalise] = useState("");
 
@@ -97,7 +102,7 @@ const Formulario = () => {
       },
     },
     vistoria: {
-      label: "Vistória",
+      label: "Vistoria",
       options: {
         energiaEletricaDomiciliar: "Energia elétrica domiciliar",
         abastecimentoAgua: "Abastecimento de água",
@@ -188,12 +193,14 @@ const Formulario = () => {
           documento: documentoSelecionado,
           variavel: variavelSelecionada,
           valor: inputValue,
-          referencia: referencia,
-          dataDocumento: dataDocumento,
-          areaAnalise: areaAnalise,
+          referencia,
+          referenciaNotes,
+          dataDocumento,
+          areaAnalise,
         },
       ]);
       setReferencia("");
+      setReferenciaNotes("");
       setDataDocumento("");
       setAreaAnalise("");
       setDocumentoSelecionado("");
@@ -205,14 +212,43 @@ const Formulario = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     if (inputValues.length > 0) {
-      console.log(inputValues);
       // aqui enviar os valores do formulário para o servidor
+      const jsonList = inputValues.map(
+        ({
+          documento,
+          variavel,
+          valor,
+          areaAnalise,
+          dataDocumento,
+          referencia,
+        }) => ({
+          "documento": variaveis[documento].label,
+          "variavel": variaveis[documento].options[variavel],
+          "valor": valor,
+          "areaAnalise": areaAnalise,
+          "dataDocumento": dataDocumento,
+          "referenciaNotes": referenciaNotes,
+          "referencia": referencia,
+        })
+      );
+
+    console.log(jsonList)
+
+    axios.post('URL_DA_SUA_API', jsonList)
+    .then(response => {
+      console.log('Dados enviados com sucesso:', response.data);
+    })
+    .catch(error => {
+      console.error('Erro ao enviar os dados:', error);
+    });
+
     }
   };
 
   const handleDocumentoChange = (event) => {
     setDocumentoSelecionado(event.target.value);
     setReferencia("");
+    setReferenciaNotes("");
     setDataDocumento("");
     setAreaAnalise("");
     setVariavelSelecionada("");
@@ -233,10 +269,15 @@ const Formulario = () => {
     setReferencia(event.target.value);
   };
 
+  const handleReferenciaNotes = (event) => {
+    setReferenciaNotes(event.target.value);
+  };
+
   const handleDataDocumento = (event) => {
     setDataDocumento(event.target.value);
   };
 
+  // eslint-disable-next-line no-unused-vars
   const handleAreaAnalise = (event) => {
     setAreaAnalise(event.target.value);
   };
@@ -286,8 +327,8 @@ const Formulario = () => {
         {(variavelSelecionada && (
           <div>
             <label htmlFor={variavelSelecionada}>
-              {`Valor ` +
-                variaveis[documentoSelecionado].options[variavelSelecionada]}
+              {`Valor ${
+                variaveis[documentoSelecionado].options[variavelSelecionada]}`}
             </label>
             <input
               id={variavelSelecionada}
@@ -298,22 +339,28 @@ const Formulario = () => {
           </div>
         )) || (
           <div>
-            <label>{`Valor`}</label>
-            <input value={"Selecione o Documento e a Variável"} />
+            <label>Valor</label>
+            <input value="Selecione o Documento e a Variável" />
           </div>
         )}
 
         <div>
-          <label htmlFor="referencia">Referência</label>
+          <p>
+            Indique onde você viu esse dado. Ex: Processo nº xxxxxx, link na
+            internet, contrato, planta, etc.
+          </p>
+          <label htmlFor="referenciaNotes">Notas de Referência</label>
+          <input
+            id={referenciaNotes}
+            value={referenciaNotes}
+            onChange={handleReferenciaNotes}
+          />
+          <label htmlFor="referencia">Link da Referência</label>
           <input
             id={referencia}
             value={referencia}
             onChange={handleReferencia}
           />
-          <p>
-            Indique onde você viu esse dado. Ex: Processo nº xxxxxx, link na
-            internet, contrato, planta, etc.
-          </p>
           <label htmlFor="dataDocumento">Data do documento</label>
           <input
             id={dataDocumento}
@@ -349,6 +396,7 @@ const Formulario = () => {
             areaAnalise,
             dataDocumento,
             referencia,
+            referenciaNotes,
           }) => (
             <li>
               <p>Documento: {variaveis[documento].label}</p>
@@ -356,13 +404,14 @@ const Formulario = () => {
               <p>Valor: {valor}</p>
               <p>Area Analise: {areaAnalise}</p>
               <p>Data Documento: {dataDocumento}</p>
-              <p>Referencia: {referencia}</p>
+              <p>Referência: {referenciaNotes}</p>
+              <p>Link Ref.: {referencia}</p>
             </li>
           )
         )}
       </ul>
     </div>
   );
-};
+}
 
 export default Formulario;
