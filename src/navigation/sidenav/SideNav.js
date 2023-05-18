@@ -19,7 +19,11 @@ import ListItemText from '@mui/material/ListItemText';
 import AssessmentIcon from '@mui/icons-material/Assessment';
 import MapIcon from '@mui/icons-material/Map';
 import ArticleIcon from '@mui/icons-material/Article';
-import { Link } from 'react-router-dom';
+
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import OpenLayerMap from '../../componentes/OpenLayerMap';
+import Formulario from '../../componentes/Formulario';
+import Reports from '../../componentes/Reports';
 
 const drawerWidth = 240;
 
@@ -88,6 +92,7 @@ export default function PersistentDrawerLeft() {
   };
 
   return (
+    <Router>
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
       <AppBar position="fixed" open={open}>
@@ -140,7 +145,14 @@ export default function PersistentDrawerLeft() {
       </Drawer>
       <Main open={open}>
         <DrawerHeader />
+          <Routes>
+              <Route path="/maps" element={<OpenLayerMap/>} />
+              <Route path="/report" element={<Reports/>} />
+              <Route path="/docs" element={<Formulario/>} />
+          </Routes>
+        <DrawerHeader />
       </Main>
     </Box>
+    </Router>
   );
 }
