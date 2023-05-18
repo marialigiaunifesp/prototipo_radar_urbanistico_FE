@@ -1,4 +1,3 @@
-/* eslint-disable import/no-extraneous-dependencies */
 import { createTheme } from '@mui/material';
 
 const theme = createTheme({
