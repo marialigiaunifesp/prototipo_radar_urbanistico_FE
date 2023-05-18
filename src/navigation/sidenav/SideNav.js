@@ -19,14 +19,15 @@ import ListItemText from '@mui/material/ListItemText';
 import AssessmentIcon from '@mui/icons-material/Assessment';
 import MapIcon from '@mui/icons-material/Map';
 import ArticleIcon from '@mui/icons-material/Article';
+import { Link } from 'react-router-dom';
 
 const drawerWidth = 240;
 
 
 const items = [
-  { text: 'Mapas', icon: <MapIcon /> },
-  { text: 'Relatórios', icon: <AssessmentIcon /> },
-  { text: 'Documentos', icon: <ArticleIcon /> },
+  { text: 'Mapas', icon: <MapIcon />, route: '/maps'},
+  { text: 'Relatórios', icon: <AssessmentIcon />, route: '/report' },
+  { text: 'Documentos', icon: <ArticleIcon />, route: '/docs'},
 ];
 
 const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
@@ -101,7 +102,7 @@ export default function PersistentDrawerLeft() {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap component="div">
-            Persistent drawer
+            Projeto Radar Urbanístico
           </Typography>
         </Toolbar>
       </AppBar>
@@ -127,7 +128,7 @@ export default function PersistentDrawerLeft() {
         <List>
           {items.map((item) => (
             <ListItem key={item.text} disablePadding>
-              <ListItemButton>
+              <ListItemButton component={Link} to={item.route}>
 
               <ListItemIcon>{item.icon}</ListItemIcon>
               <ListItemText primary={item.text} />
