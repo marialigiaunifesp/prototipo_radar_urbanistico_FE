@@ -1,6 +1,9 @@
+/* eslint-disable object-shorthand */
 /* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable no-shadow */
 /* eslint-disable jsx-a11y/label-has-associated-control */
+
+
 import React, { useState } from "react";
 import axios from 'axios';
 
@@ -10,10 +13,10 @@ function Formulario() {
   const [inputValues, setInputValues] = useState([]);
   const [inputValue, setInputValue] = useState("");
   const [referencia, setReferencia] = useState("");
-  const [referenciaNotes, setReferenciaNotes] = useState("");
+  const [referenciaLink, setReferenciaLink] = useState("");
   const [dataDocumento, setDataDocumento] = useState("");
   const [areaAnalise, setAreaAnalise] = useState("");
-
+  const [selectedFile, setSelectedFile] = useState(null);
   const variaveis = {
     processoJudicial: {
       label: "Processo Judicial",
@@ -193,14 +196,14 @@ function Formulario() {
           documento: documentoSelecionado,
           variavel: variavelSelecionada,
           valor: inputValue,
-          referencia,
-          referenciaNotes,
-          dataDocumento,
-          areaAnalise,
+          referencia: referencia,
+          referenciaLink: referenciaLink,
+          dataDocumento: dataDocumento,
+          areaAnalise: areaAnalise,
         },
       ]);
       setReferencia("");
-      setReferenciaNotes("");
+      setReferenciaLink("");
       setDataDocumento("");
       setAreaAnalise("");
       setDocumentoSelecionado("");
@@ -209,10 +212,16 @@ function Formulario() {
     }
   };
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
+  const handleSubmit = () => {
+    // event.preventDefault();
     if (inputValues.length > 0) {
       // aqui enviar os valores do formulário para o servidor
+      const formData = new FormData();
+
+      if (selectedFile)  
+        formData.append(selectedFile.name, selectedFile);
+      
+
       const jsonList = inputValues.map(
         ({
           documento,
@@ -221,26 +230,31 @@ function Formulario() {
           areaAnalise,
           dataDocumento,
           referencia,
+          referenciaLink
         }) => ({
           "documento": variaveis[documento].label,
           "variavel": variaveis[documento].options[variavel],
           "valor": valor,
           "areaAnalise": areaAnalise,
           "dataDocumento": dataDocumento,
-          "referenciaNotes": referenciaNotes,
+          "referenciaLink": referenciaLink,
           "referencia": referencia,
         })
       );
 
-    console.log(jsonList);
+      Object.keys(jsonList).forEach((key) => {
+        formData.append(key, jsonList[key]);
+      });    
 
-    axios.post('URL_DA_SUA_API', jsonList)
-    .then(response => {
-      console.log('Dados enviados com sucesso:', response.data);
-    })
-    .catch(error => {
-      console.error('Erro ao enviar os dados:', error);
-    });
+      console.log(formData);
+
+      axios.post('URL_DA_SUA_API', formData)
+        .then(response => {
+          console.log('Dados enviados com sucesso:', response.data);
+        })
+        .catch(error => {
+          console.error('Erro ao enviar os dados:', error);
+        });
 
     }
   };
@@ -248,17 +262,15 @@ function Formulario() {
   const handleDocumentoChange = (event) => {
     setDocumentoSelecionado(event.target.value);
     setReferencia("");
-    setReferenciaNotes("");
+    setReferenciaLink("");
     setDataDocumento("");
     setAreaAnalise("");
     setVariavelSelecionada("");
     setInputValue("");
-    console.log("Documento Selecionado", event.target.value);
   };
+
   const handleVariavelChange = (event) => {
     setVariavelSelecionada(event.target.value);
-
-    console.log("Variavel Selecionado", event.target.value);
   };
 
   const handleInputChange = (event) => {
@@ -269,8 +281,8 @@ function Formulario() {
     setReferencia(event.target.value);
   };
 
-  const handleReferenciaNotes = (event) => {
-    setReferenciaNotes(event.target.value);
+  const handleReferenciaLink = (event) => {
+    setReferenciaLink(event.target.value);
   };
 
   const handleDataDocumento = (event) => {
@@ -281,6 +293,11 @@ function Formulario() {
   const handleAreaAnalise = (event) => {
     setAreaAnalise(event.target.value);
   };
+
+  const handleFileChange = (event) => {
+    console.log(event)
+    setSelectedFile(event.target.files[0]);
+  }
 
   return (
     <div>
@@ -316,19 +333,18 @@ function Formulario() {
             </select>
           </div>
         )) || (
-          <div>
-            <label>Variável</label>
-            <select>
-              <option value="">Primeiro Selecione o Documento</option>
-            </select>
-          </div>
-        )}
+            <div>
+              <label>Variável</label>
+              <select>
+                <option value="">Primeiro Selecione o Documento</option>
+              </select>
+            </div>
+          )}
 
         {(variavelSelecionada && (
           <div>
             <label htmlFor={variavelSelecionada}>
-              {`Valor ${
-                variaveis[documentoSelecionado].options[variavelSelecionada]}`}
+              {`Valor ${variaveis[documentoSelecionado].options[variavelSelecionada]}`}
             </label>
             <input
               id={variavelSelecionada}
@@ -338,24 +354,24 @@ function Formulario() {
             />
           </div>
         )) || (
-          <div>
-            <label>Valor</label>
-            <input value="Selecione o Documento e a Variável" />
-          </div>
-        )}
+            <div>
+              <label>Valor</label>
+              <input value="Selecione o Documento e a Variável" />
+            </div>
+          )}
 
         <div>
           <p>
             Indique onde você viu esse dado. Ex: Processo nº xxxxxx, link na
             internet, contrato, planta, etc.
           </p>
-          <label htmlFor="referenciaNotes">Notas de Referência</label>
+          <label htmlFor="referenciaLink">Notas de Referência</label>
           <input
-            id={referenciaNotes}
-            value={referenciaNotes}
-            onChange={handleReferenciaNotes}
+            id={referenciaLink}
+            value={referenciaLink}
+            onChange={handleReferenciaLink}
           />
-          <label htmlFor="referencia">Link da Referência</label>
+          <label htmlFor="referenciaLink">Link da Referência</label>
           <input
             id={referencia}
             value={referencia}
@@ -382,9 +398,12 @@ function Formulario() {
         </div>
 
         <button type="button" onClick={handleAddInput}>
-          Adicionar
+          Inserir outro dado
         </button>
-        {inputValues.length > 0 && <button type="submit">Enviar</button>}
+        <div>
+          <input type="file" onChange={handleFileChange} />
+        </div>
+        {inputValues.length > 0 && <button type="submit">Finalizar</button>}
       </form>
 
       <ul>
@@ -396,7 +415,7 @@ function Formulario() {
             areaAnalise,
             dataDocumento,
             referencia,
-            referenciaNotes,
+            referenciaLink,
           }) => (
             <li>
               <p>Documento: {variaveis[documento].label}</p>
@@ -404,7 +423,7 @@ function Formulario() {
               <p>Valor: {valor}</p>
               <p>Area Analise: {areaAnalise}</p>
               <p>Data Documento: {dataDocumento}</p>
-              <p>Referência: {referenciaNotes}</p>
+              <p>Referência: {referenciaLink}</p>
               <p>Link Ref.: {referencia}</p>
             </li>
           )
