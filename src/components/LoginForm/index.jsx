@@ -9,6 +9,7 @@ import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import { ThemeProvider } from 'styled-components';
 import theme from '../../configs/theme';
+import GlobalStyles from '../../styles/GlobalStyles';
 
 function Login() {
   const [username, setUsername] = useState('');
@@ -51,6 +52,7 @@ function Login() {
 
   return (
     <ThemeProvider theme={theme}>
+      <GlobalStyles />
       <Box sx={ { background: 'primary.light' } }>
         <FormControl onSubmit={handleSubmit}>
           <TextField

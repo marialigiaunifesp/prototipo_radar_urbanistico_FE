@@ -7,7 +7,7 @@ import { Draw, Modify, Snap } from 'ol/interaction';
 import { fromLonLat } from 'ol/proj';
 import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
-import MapContainer from '../../styles';
+import MapContainer from './styled';
 
 function OpenLayerMap() {
   const mapRef = useRef(null);

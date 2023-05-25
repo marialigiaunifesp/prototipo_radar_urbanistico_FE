@@ -1,14 +1,16 @@
 import React from 'react';
 import  { ThemeProvider } from '@mui/material';
 import theme from './configs/theme';
-// import SideNav from './navigation/sidenav/SideNav';
-import Login from './components/Login';
+import SideNav from './components/navigation/Sidenav';
+// import Login from './components/Login';
+import GlobalStyles from './styles/GlobalStyles';
 
 function App() {
   return (
     <ThemeProvider theme={theme}>
-      {/* <SideNav /> */}
-      <Login />
+      <GlobalStyles />
+      <SideNav />
+      {/* <Login /> */}
     </ThemeProvider>
   );
 }
