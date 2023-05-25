@@ -9,7 +9,7 @@ export default createGlobalStyle`
   }
 
   body {
-    background: #eee;
+    background: #e5f1f0;
   }
 
   html, body, #root {
