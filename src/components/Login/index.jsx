@@ -8,7 +8,7 @@ import FormControl from '@mui/material/FormControl';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import { ThemeProvider } from 'styled-components';
-import theme from '../../theme';
+import theme from '../../configs/theme';
 
 function Login() {
   const [username, setUsername] = useState('');

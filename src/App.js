@@ -1,6 +1,6 @@
 import React from 'react';
 import  { ThemeProvider } from '@mui/material';
-import theme from './theme';
+import theme from './configs/theme';
 // import SideNav from './navigation/sidenav/SideNav';
 import Login from './components/Login';
 
