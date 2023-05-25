@@ -21,9 +21,9 @@ import MapIcon from '@mui/icons-material/Map';
 import ArticleIcon from '@mui/icons-material/Article';
 
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
-import OpenLayerMap from '../../componentes/OpenLayerMap';
-import Formulario from '../../componentes/Formulario';
-import Reports from '../../componentes/Reports';
+import OpenLayerMap from '../OpenLayerMap';
+import Formulario from '../Formulario';
+import Reports from '../Reports';
 
 const drawerWidth = 240;
 
