@@ -14,7 +14,7 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import ForestSharpIcon from '@mui/icons-material/ForestSharp';
 
-const pages = ['Products', 'Pricing', 'Blog'];
+const pages = ['Projeto', 'Pricing', 'Blog'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 function HeaderNav() {
@@ -130,7 +130,7 @@ function HeaderNav() {
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="V" src="/static/images/avatar/2.jpg" />
+                <Avatar alt="A" src="" />
               </IconButton>
             </Tooltip>
             <Menu

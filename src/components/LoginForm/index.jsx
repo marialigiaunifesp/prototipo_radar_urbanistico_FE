@@ -9,7 +9,7 @@ import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import { ThemeProvider } from 'styled-components';
 import theme from '../../configs/theme';
-import GlobalStyles from '../../styles/GlobalStyles';
+import LoginContainer from './styled';
 
 function Login() {
   const [username, setUsername] = useState('');
@@ -52,23 +52,23 @@ function Login() {
 
   return (
     <ThemeProvider theme={theme}>
-      <GlobalStyles />
-      <Box sx={ { background: 'primary.light' } }>
-        <FormControl onSubmit={handleSubmit}>
-          <TextField
-            id="outlined-basic" label="Usuário" variant="outlined"
-            type="text" name="username" required
-            value={username} onChange={handleInputChange} />
-          <br />
-          <TextField id="outlined-basic" variant='outlined' type="password"
-            name="password" required value={password} label="Senha"
-            onChange={handleInputChange}
-          />
-          <br />
-          <Button variant="contained" type="submit">Login</Button>
-        </FormControl>
-
-      </Box>
+      <LoginContainer>
+        <Box>
+          <FormControl onSubmit={handleSubmit}>
+            <TextField
+              id="outlined-basic" label="Usuário" variant="outlined"
+              type="text" name="username" required
+              value={username} onChange={handleInputChange} />
+            <br />
+            <TextField id="outlined-basic" variant='outlined' type="password"
+              name="password" required value={password} label="Senha"
+              onChange={handleInputChange}
+            />
+            <br />
+            <Button variant="contained" type="submit">Login</Button>
+          </FormControl>
+        </Box>
+      </LoginContainer>
     </ThemeProvider>
   );
 }
