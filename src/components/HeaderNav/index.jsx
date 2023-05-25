@@ -14,8 +14,9 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import ForestSharpIcon from '@mui/icons-material/ForestSharp';
 
-const pages = ['Projeto', 'Pricing', 'Blog'];
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+const pages = ['Sobre o Projeto', 'Consultas de Mapas e Documentos',
+ 'Nossa Equipe'];
+const settings = ['Perfil', 'Conta', 'Logout'];
 
 function HeaderNav() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);

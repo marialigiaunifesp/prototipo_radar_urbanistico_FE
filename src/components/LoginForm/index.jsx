@@ -6,10 +6,9 @@ import jwt_decode from 'jwt-decode';
 import TextField from '@mui/material/TextField';
 import FormControl from '@mui/material/FormControl';
 import Button from '@mui/material/Button';
-import Box from '@mui/material/Box';
 import { ThemeProvider } from 'styled-components';
 import theme from '../../configs/theme';
-import LoginContainer from './styled';
+import { LoginContainer, Title } from './styled';
 
 function Login() {
   const [username, setUsername] = useState('');
@@ -53,7 +52,7 @@ function Login() {
   return (
     <ThemeProvider theme={theme}>
       <LoginContainer>
-        <Box>
+          <Title>Login de Usuário</Title>
           <FormControl onSubmit={handleSubmit}>
             <TextField
               id="outlined-basic" label="Usuário" variant="outlined"
@@ -67,7 +66,6 @@ function Login() {
             <br />
             <Button variant="contained" type="submit">Login</Button>
           </FormControl>
-        </Box>
       </LoginContainer>
     </ThemeProvider>
   );
