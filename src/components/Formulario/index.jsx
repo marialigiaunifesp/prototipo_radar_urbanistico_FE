@@ -6,6 +6,8 @@
 
 import React, { useState } from "react";
 import axios from 'axios';
+import 'bootstrap/dist/css/bootstrap.css';
+import './styled.css'
 
 function Formulario() {
   const [documentoSelecionado, setDocumentoSelecionado] = useState("");
@@ -13,7 +15,6 @@ function Formulario() {
   const [inputValues, setInputValues] = useState([]);
   const [inputValue, setInputValue] = useState("");
   const [referencia, setReferencia] = useState("");
-  const [referenciaLink, setReferenciaLink] = useState("");
   const [dataDocumento, setDataDocumento] = useState("");
   const [areaAnalise, setAreaAnalise] = useState("");
   const [selectedFile, setSelectedFile] = useState(null);
@@ -197,13 +198,11 @@ function Formulario() {
           variavel: variavelSelecionada,
           valor: inputValue,
           referencia: referencia,
-          referenciaLink: referenciaLink,
           dataDocumento: dataDocumento,
           areaAnalise: areaAnalise,
         },
       ]);
       setReferencia("");
-      setReferenciaLink("");
       setDataDocumento("");
       setAreaAnalise("");
       setDocumentoSelecionado("");
@@ -218,9 +217,9 @@ function Formulario() {
       // aqui enviar os valores do formulário para o servidor
       const formData = new FormData();
 
-      if (selectedFile)  
+      if (selectedFile)
         formData.append(selectedFile.name, selectedFile);
-      
+
 
       const jsonList = inputValues.map(
         ({
@@ -230,21 +229,19 @@ function Formulario() {
           areaAnalise,
           dataDocumento,
           referencia,
-          referenciaLink
         }) => ({
           "documento": variaveis[documento].label,
           "variavel": variaveis[documento].options[variavel],
           "valor": valor,
           "areaAnalise": areaAnalise,
           "dataDocumento": dataDocumento,
-          "referenciaLink": referenciaLink,
           "referencia": referencia,
         })
       );
 
       Object.keys(jsonList).forEach((key) => {
         formData.append(key, jsonList[key]);
-      });    
+      });
 
       console.log(formData);
 
@@ -262,7 +259,6 @@ function Formulario() {
   const handleDocumentoChange = (event) => {
     setDocumentoSelecionado(event.target.value);
     setReferencia("");
-    setReferenciaLink("");
     setDataDocumento("");
     setAreaAnalise("");
     setVariavelSelecionada("");
@@ -281,9 +277,7 @@ function Formulario() {
     setReferencia(event.target.value);
   };
 
-  const handleReferenciaLink = (event) => {
-    setReferenciaLink(event.target.value);
-  };
+
 
   const handleDataDocumento = (event) => {
     setDataDocumento(event.target.value);
@@ -300,137 +294,182 @@ function Formulario() {
   }
 
   return (
-    <div>
+    <div className = 'index'>
       <form onSubmit={handleSubmit}>
-        <label htmlFor="documento">Documento</label>
-        <select
-          id="documento"
-          name="documento"
-          value={documentoSelecionado}
-          onChange={handleDocumentoChange}
-        >
-          <option value="">Selecione o Documento</option>
-          {Object.entries(variaveis).map(([documento, { label }]) => (
-            <option value={documento}>{label}</option>
-          ))}
-        </select>
-
-        {(Object.keys(variaveis).includes(documentoSelecionado) && (
-          <div>
-            <label htmlFor="variavel">Variável</label>
-            <select
-              id="variavel"
-              name="variavel"
-              value={variavelSelecionada}
-              onChange={handleVariavelChange}
-            >
-              <option value="">Selecione a Variável</option>
-              {Object.entries(variaveis[documentoSelecionado].options).map(
-                ([chave, valor]) => (
-                  <option value={chave}>{valor}</option>
-                )
-              )}
-            </select>
-          </div>
-        )) || (
-            <div>
-              <label>Variável</label>
-              <select>
-                <option value="">Primeiro Selecione o Documento</option>
+        <p id="titulo-formulario">INSERIR DADOS DOCUMENTAIS</p>
+        <div className="form-box">
+          <div className="flex-box">
+            <div className="documento-box">
+              <label htmlFor="documento">Documento</label>
+              <select
+                id="documento"
+                name="documento"
+                value={documentoSelecionado}
+                onChange={handleDocumentoChange}>
+                <option value="" disabled selected> </option>
+                {Object.entries(variaveis).map(([documento, { label }]) => (
+                  <option value={documento}>{label}</option>
+                ))}
               </select>
+              <small >
+                Selecione o documento ao qual o dado se refere. Ex: Matrícula do imóvel.
+              </small>
             </div>
-          )}
 
-        {(variavelSelecionada && (
-          <div>
-            <label htmlFor={variavelSelecionada}>
-              {`Valor ${variaveis[documentoSelecionado].options[variavelSelecionada]}`}
-            </label>
-            <input
-              id={variavelSelecionada}
-              name={variavelSelecionada}
-              value={inputValue}
-              onChange={handleInputChange}
-            />
+            {(Object.keys(variaveis).includes(documentoSelecionado) && (
+              <div className="variavel-box">
+                <label htmlFor="variavel">Variável</label>
+                <select
+                  id="variavel"
+                  name="variavel"
+                  value={variavelSelecionada}
+                  onChange={handleVariavelChange}
+                >
+                  <option value="" disabled selected>Selecione a Variável</option>
+                  {Object.entries(variaveis[documentoSelecionado].options).map(
+                    ([chave, valor]) => (
+                      <option value={chave}>{valor}</option>
+                    )
+                  )}
+                </select>
+                <small>
+                  Escolha que dado você vai inserir.
+                </small>
+              </div>
+            )) || (
+                <div className="variavel-box">
+                  <label>Variável</label>
+                  <select>
+                    <option value="" disabled selected> </option>
+                  </select>
+                  <small >
+                    Escolha que dado você vai inserir.
+                  </small>
+                </div>
+              )}
+
+            {(variavelSelecionada && (
+              <div className="valor-box">
+                <label htmlFor={variavelSelecionada}>
+                  {`Valor ${variaveis[documentoSelecionado].options[variavelSelecionada]}`}
+                </label>
+                <input
+                  id={variavelSelecionada}
+                  name={variavelSelecionada}
+                  value={inputValue}
+                  onChange={handleInputChange}
+
+                />
+                <small >
+                  Informação referente ao dado que você vai inserir.
+                </small>
+              </div>
+            )) || (
+                <div className="valor-box">
+                  <label>Valor</label>
+                  <input type="text" id="valor" name="valor" />
+                  <small >
+                    Informação referente ao dado que você vai inserir.
+                  </small>
+                </div>
+              )}
           </div>
-        )) || (
-            <div>
-              <label>Valor</label>
-              <input value="Selecione o Documento e a Variável" />
+
+          <div className="flex-box">
+            <div className="referencia-box">
+              <label htmlFor="referencia">Referência</label>
+              <input
+                id={referencia}
+                type="text"
+                value={referencia}
+                onChange={handleReferencia}
+              />
+              <small >
+                Indique onde você viu esse dado. Ex: Processo nº xxxxxx, link na
+                internet, contrato, planta, etc.
+              </small>
             </div>
-          )}
 
-        <div>
-          <p>
-            Indique onde você viu esse dado. Ex: Processo nº xxxxxx, link na
-            internet, contrato, planta, etc.
-          </p>
-          <label htmlFor="referenciaLink">Notas de Referência</label>
-          <input
-            id={referenciaLink}
-            value={referenciaLink}
-            onChange={handleReferenciaLink}
-          />
-          <label htmlFor="referenciaLink">Link da Referência</label>
-          <input
-            id={referencia}
-            value={referencia}
-            onChange={handleReferencia}
-          />
-          <label htmlFor="dataDocumento">Data do documento</label>
-          <input
-            id={dataDocumento}
-            type="date"
-            value={dataDocumento}
-            onChange={handleDataDocumento}
-          />
-          <p>
-            Data do documento de onde você pegou o dado. Se não souber informar,
-            selecione a opção “Não sei”.
-          </p>
-          <label htmlFor="areaAnalise">Área de análise</label>
+            <div className="data-box">
+              <label htmlFor="dataDocumento">Data do documento</label>
+              <input
+                id={dataDocumento}
+                type="date"
+                value={dataDocumento}
+                onChange={handleDataDocumento}
+              />
+              <small >
+                Data do documento de onde você pegou o dado. Se não souber informar, deixe em branco.
+              </small>
+            </div>
 
-          <select>
-            <option value="">dados</option>
-          </select>
+            <div className="areaAnalise-box">
+              <label htmlFor="areaAnalise">Área de análise</label>
+              <select id="areaAnalise">
+                <option value="" disabled selected> </option>
+              </select>
 
-          <p>Selecionar uma das opções possíveis</p>
+              <small >Selecionar uma das opções possíveis</small>
+            </div>
+          </div>
         </div>
 
-        <button type="button" onClick={handleAddInput}>
-          Inserir outro dado
-        </button>
-        <div>
-          <input type="file" onChange={handleFileChange} />
+        <div className="novo-dado">
+          <button type="button" onClick={handleAddInput}>
+            <figure id="image-novo-dado" alt="icone de soma" />
+          </button>
+          <p>Inserir outro dado</p>
         </div>
-        {inputValues.length > 0 && <button type="submit">Finalizar</button>}
-      </form>
 
-      <ul>
-        {inputValues.map(
-          ({
-            documento,
-            variavel,
-            valor,
-            areaAnalise,
-            dataDocumento,
-            referencia,
-            referenciaLink,
-          }) => (
-            <li>
-              <p>Documento: {variaveis[documento].label}</p>
-              <p>Variável: {variaveis[documento].options[variavel]}</p>
-              <p>Valor: {valor}</p>
-              <p>Area Analise: {areaAnalise}</p>
-              <p>Data Documento: {dataDocumento}</p>
-              <p>Referência: {referenciaLink}</p>
-              <p>Link Ref.: {referencia}</p>
-            </li>
+        <div className="novo-file">
+          <label htmlFor="input-file" onChange={handleFileChange}>
+            <figure id="image-novo-file" alt="icone de anexo" />
+          </label>
+          <input type="file" id="input-file" />
+          <p> Anexar Arquivo</p>
+
+        </div>
+
+        {(inputValues.length > 0 &&
+          (
+            <div className="submit">
+              <button type="submit">Finalizar</button>
+            </div>
           )
         )}
-      </ul>
-    </div>
-  );
+      </form >
+      
+      <div className="janela-avisos">
+        <p id = "titulo-janela-avisos">JANELA DE AVISOS</p>
+        <p>PÁGINA DE DOCUMENTOS
+          Escolha no menu lateral o que quer visualizar.
+          Insira cada campo de dados que você tiver. Tudo bem se você não tiver todos os dados agora! Depois você pode editar e refinar seu trabalho.
+        </p>
+        </div>
+
+        <ul>
+          {inputValues.map(
+            ({
+              documento,
+              variavel,
+              valor,
+              areaAnalise,
+              dataDocumento,
+              referencia,
+            }) => (
+              <li>
+                <p>Documento: {variaveis[documento].label}</p>
+                <p>Variável: {variaveis[documento].options[variavel]}</p>
+                <p>Valor: {valor}</p>
+                <p>Area Analise: {areaAnalise}</p>
+                <p>Data Documento: {dataDocumento}</p>
+                <p>Link Ref.: {referencia}</p>
+              </li>
+            )
+          )}
+        </ul>
+      </div>
+      );
 }
 
 export default Formulario;

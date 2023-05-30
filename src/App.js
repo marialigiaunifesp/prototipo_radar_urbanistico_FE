@@ -2,9 +2,10 @@ import React from 'react';
 import  { ThemeProvider } from '@mui/material';
 import theme from './configs/theme';
 // import SideNav from './components/navigation/Sidenav';
-import Login from './components/LoginForm';
+// import Login from './components/LoginForm';
 import GlobalStyles from './styles/GlobalStyles';
 import HeaderNav from './components/HeaderNav'
+import Formulario from './components/Formulario';
 
 function App() {
   return (
@@ -12,7 +13,9 @@ function App() {
       <GlobalStyles />
       <HeaderNav />
       {/* <SideNav /> */}
-      <Login />
+      <Formulario />
+      {/* <Login /> */}
+
     </ThemeProvider>
   );
 }
