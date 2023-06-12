@@ -74,7 +74,7 @@ function OpenLayerMap() {
         console.log('Dados salvos com sucesso:', data);
       })
       .catch(error => {
-        console.error('Erro ao salvar os dados:', error);
+        console.error('Erro ao salvar os dados:', error.message);
       });
   };
 
