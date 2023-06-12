@@ -211,8 +211,8 @@ function Formulario() {
     }
   };
 
-  const handleSubmit = () => {
-    // event.preventDefault();
+  const handleSubmit = (event) => {
+    event.preventDefault();
     if (inputValues.length > 0) {
       // aqui enviar os valores do formulário para o servidor
       const formData = new FormData();
