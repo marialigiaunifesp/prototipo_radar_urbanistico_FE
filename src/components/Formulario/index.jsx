@@ -250,7 +250,7 @@ function Formulario() {
           console.log('Dados enviados com sucesso:', response.data);
         })
         .catch(error => {
-          console.error('Erro ao enviar os dados:', error);
+          console.error('Erro ao enviar os dados:', error.message);
         });
 
     }
