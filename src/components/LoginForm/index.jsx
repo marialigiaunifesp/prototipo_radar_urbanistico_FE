@@ -11,18 +11,9 @@ import theme from '../../configs/theme';
 import { LoginContainer, Title } from './styled';
 
 function Login() {
-  const [username, setUsername] = useState('');
+  const [username, setUserName] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleInputChange = (event) => {
-    const { name, value } = event.target;
-
-    if (name === 'username') {
-      setUsername(value);
-    } else if (name === 'password') {
-      setPassword(value);
-    }
-  };
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -57,11 +48,11 @@ function Login() {
             <TextField
               id="outlined-basic" label="Usuário" variant="outlined"
               type="text" name="username" required
-              value={username} onChange={handleInputChange} />
+              value={username} onChange={e => setUserName(e.target.value)} />
             <br />
             <TextField id="outlined-basic" variant='outlined' type="password"
               name="password" required value={password} label="Senha"
-              onChange={handleInputChange}
+              onChange={e => setPassword(e.target.value)}
             />
             <br />
             <Button variant="contained" type="submit">Login</Button>
