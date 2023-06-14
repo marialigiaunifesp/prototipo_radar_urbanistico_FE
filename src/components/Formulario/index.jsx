@@ -6,18 +6,19 @@
 
 import React, { useState } from "react";
 import axios from 'axios';
-import 'bootstrap/dist/css/bootstrap.css';
 import './styled.css'
+import { v4 as uuid } from 'uuid';
 
 function Formulario() {
-  const [documentoSelecionado, setDocumentoSelecionado] = useState("");
-  const [variavelSelecionada, setVariavelSelecionada] = useState("");
-  const [inputValues, setInputValues] = useState([]);
+  const [formulario, setFormulario] = useState([]);
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [documento, setDocumento] = useState("");
+  const [variavel, setVariavel] = useState("");
   const [inputValue, setInputValue] = useState("");
   const [referencia, setReferencia] = useState("");
   const [dataDocumento, setDataDocumento] = useState("");
   const [areaAnalise, setAreaAnalise] = useState("");
-  const [selectedFile, setSelectedFile] = useState(null);
+
   const variaveis = {
     processoJudicial: {
       label: "Processo Judicial",
@@ -190,30 +191,33 @@ function Formulario() {
 
   const handleAddInput = (event) => {
     event.preventDefault();
-    if (documentoSelecionado && variavelSelecionada && inputValue) {
-      setInputValues([
-        ...inputValues,
+    if (documento && variavel && inputValue) {
+      setFormulario([
+        ...formulario,
         {
-          documento: documentoSelecionado,
-          variavel: variavelSelecionada,
+          documento: documento,
+          nameDocumento: variaveis[documento].label,
+          variavel: variavel,
+          nameVariavel: variaveis[documento].options[variavel],
           valor: inputValue,
           referencia: referencia,
           dataDocumento: dataDocumento,
           areaAnalise: areaAnalise,
-        },
+          id: uuid()
+        }
       ]);
       setReferencia("");
       setDataDocumento("");
       setAreaAnalise("");
-      setDocumentoSelecionado("");
-      setVariavelSelecionada("");
+      setDocumento("");
+      setVariavel("");
       setInputValue("");
     }
   };
 
   const handleSubmit = () => {
     // event.preventDefault();
-    if (inputValues.length > 0) {
+    if (formulario.length > 0) {
       // aqui enviar os valores do formulário para o servidor
       const formData = new FormData();
 
@@ -221,7 +225,7 @@ function Formulario() {
         formData.append(selectedFile.name, selectedFile);
 
 
-      const jsonList = inputValues.map(
+      const jsonList = formulario.map(
         ({
           documento,
           variavel,
@@ -246,41 +250,23 @@ function Formulario() {
       console.log(formData);
 
       axios.post('URL_DA_SUA_API', formData)
-        .then(response => {
-          console.log('Dados enviados com sucesso:', response.data);
-        })
-        .catch(error => {
-          console.error('Erro ao enviar os dados:', error);
-        });
+      .then(response => {
+        console.log('Dados enviados com sucesso:', response.data);
+      })
+      .catch(error => {
+        console.error('Erro ao enviar os dados:', error.message);
+      });
 
     }
   };
 
   const handleDocumentoChange = (event) => {
-    setDocumentoSelecionado(event.target.value);
+    setDocumento(event.target.value);
     setReferencia("");
     setDataDocumento("");
     setAreaAnalise("");
-    setVariavelSelecionada("");
+    setVariavel("");
     setInputValue("");
-  };
-
-  const handleVariavelChange = (event) => {
-    setVariavelSelecionada(event.target.value);
-  };
-
-  const handleInputChange = (event) => {
-    setInputValue(event.target.value);
-  };
-
-  const handleReferencia = (event) => {
-    setReferencia(event.target.value);
-  };
-
-
-
-  const handleDataDocumento = (event) => {
-    setDataDocumento(event.target.value);
   };
 
   // eslint-disable-next-line no-unused-vars
@@ -288,15 +274,48 @@ function Formulario() {
     setAreaAnalise(event.target.value);
   };
 
-  const handleFileChange = (event) => {
-    console.log(event)
-    setSelectedFile(event.target.files[0]);
-  }
 
   return (
-    <div className = 'index'>
+    <div className='index'>
+
+
       <form onSubmit={handleSubmit}>
         <p id="titulo-formulario">INSERIR DADOS DOCUMENTAIS</p>
+
+        {formulario.map((input) => (
+          <div key={input.id} className="form-box">
+            <div className="flex-box">
+              <div className="documento-box">
+                <label>Documento</label>
+                <input className="inserted-value" type="text" value={input.nameDocumento} readOnly />
+              </div>
+              <div className="variavel-box">
+                <label>Variável</label>
+                <input type="text" className="inserted-value" value={input.nameVariavel} readOnly />
+              </div>
+              <div className="valor-box">
+                <label >{`${input.nameVariavel}`}</label>
+                <input className="inserted-value" type="text" id="valor" value={input.valor} readOnly />
+              </div>
+            </div>
+            <div className="flex-box">
+              <div className="referencia-box">
+                <label>Referência</label>
+                <input className="inserted-value" type="text" value={input.referencia} readOnly />
+              </div>
+              <div className="data-box">
+                <label>Data do documento</label>
+                <input className="inserted-value"  type="text" value={input.name} readOnly />
+              </div>
+              <div className="areaAnalise-box">
+                <label>Área de análise</label>
+                <input className="inserted-value" type="text"  id="areaAnalise" value={input.areaAnalise} readOnly />
+              </div>
+            </div>
+          </div>
+        ))}
+
+
         <div className="form-box">
           <div className="flex-box">
             <div className="documento-box">
@@ -304,7 +323,7 @@ function Formulario() {
               <select
                 id="documento"
                 name="documento"
-                value={documentoSelecionado}
+                value={documento}
                 onChange={handleDocumentoChange}>
                 <option value="" disabled selected> </option>
                 {Object.entries(variaveis).map(([documento, { label }]) => (
@@ -316,17 +335,17 @@ function Formulario() {
               </small>
             </div>
 
-            {(Object.keys(variaveis).includes(documentoSelecionado) && (
+            {(Object.keys(variaveis).includes(documento) && (
               <div className="variavel-box">
                 <label htmlFor="variavel">Variável</label>
                 <select
                   id="variavel"
                   name="variavel"
-                  value={variavelSelecionada}
-                  onChange={handleVariavelChange}
+                  value={variavel}
+                  onChange={(e) => setVariavel(e.target.value)}
                 >
                   <option value="" disabled selected>Selecione a Variável</option>
-                  {Object.entries(variaveis[documentoSelecionado].options).map(
+                  {Object.entries(variaveis[documento].options).map(
                     ([chave, valor]) => (
                       <option value={chave}>{valor}</option>
                     )
@@ -348,17 +367,16 @@ function Formulario() {
                 </div>
               )}
 
-            {(variavelSelecionada && (
+            {(variavel && (
               <div className="valor-box">
-                <label htmlFor={variavelSelecionada}>
-                  {`Valor ${variaveis[documentoSelecionado].options[variavelSelecionada]}`}
+                <label htmlFor={variavel} >
+                  {variaveis[documento].options[variavel]}
                 </label>
                 <input
-                  id={variavelSelecionada}
-                  name={variavelSelecionada}
+                  id="valor"
+                  name={variavel}
                   value={inputValue}
-                  onChange={handleInputChange}
-
+                  onChange={(e) => setInputValue(e.target.value)}
                 />
                 <small >
                   Informação referente ao dado que você vai inserir.
@@ -382,7 +400,8 @@ function Formulario() {
                 id={referencia}
                 type="text"
                 value={referencia}
-                onChange={handleReferencia}
+                onChange={(e) => setReferencia(e.target.value)}
+
               />
               <small >
                 Indique onde você viu esse dado. Ex: Processo nº xxxxxx, link na
@@ -396,7 +415,7 @@ function Formulario() {
                 id={dataDocumento}
                 type="date"
                 value={dataDocumento}
-                onChange={handleDataDocumento}
+                onChange={(e) => setDataDocumento(e.target.value)}
               />
               <small >
                 Data do documento de onde você pegou o dado. Se não souber informar, deixe em branco.
@@ -422,7 +441,7 @@ function Formulario() {
         </div>
 
         <div className="novo-file">
-          <label htmlFor="input-file" onChange={handleFileChange}>
+          <label htmlFor="input-file" onChange={(e) => setSelectedFile(e.target.files[0])}>
             <figure id="image-novo-file" alt="icone de anexo" />
           </label>
           <input type="file" id="input-file" />
@@ -430,7 +449,7 @@ function Formulario() {
 
         </div>
 
-        {(inputValues.length > 0 &&
+        {(formulario.length > 0 &&
           (
             <div className="submit">
               <button type="submit">Finalizar</button>
@@ -438,38 +457,16 @@ function Formulario() {
           )
         )}
       </form >
-      
+
       <div className="janela-avisos">
-        <p id = "titulo-janela-avisos">JANELA DE AVISOS</p>
+        <p id="titulo-janela-avisos">JANELA DE AVISOS</p>
         <p>PÁGINA DE DOCUMENTOS
           Escolha no menu lateral o que quer visualizar.
           Insira cada campo de dados que você tiver. Tudo bem se você não tiver todos os dados agora! Depois você pode editar e refinar seu trabalho.
         </p>
-        </div>
-
-        <ul>
-          {inputValues.map(
-            ({
-              documento,
-              variavel,
-              valor,
-              areaAnalise,
-              dataDocumento,
-              referencia,
-            }) => (
-              <li>
-                <p>Documento: {variaveis[documento].label}</p>
-                <p>Variável: {variaveis[documento].options[variavel]}</p>
-                <p>Valor: {valor}</p>
-                <p>Area Analise: {areaAnalise}</p>
-                <p>Data Documento: {dataDocumento}</p>
-                <p>Link Ref.: {referencia}</p>
-              </li>
-            )
-          )}
-        </ul>
       </div>
-      );
+    </div>
+  );
 }
 
 export default Formulario;

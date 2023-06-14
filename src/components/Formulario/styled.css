@@ -66,6 +66,7 @@ form {
 #valor,
 #areaAnalise {
     width: 350px;
+    
 }
 
 label {
@@ -113,11 +114,11 @@ small {
 }
 
 #image-novo-file {
-    background-image: url(../../figures/🦆\ icon\ _attach\ file_.png);
+    background-image: url(../../static/🦆\ icon\ _attach\ file_.png);
 }
 
 #image-novo-dado {
-    background-image: url(../../figures/🦆\ icon\ _add\ circle\ outline_.png);
+    background-image: url(../../static/🦆\ icon\ _add\ circle\ outline_.png);
 }
 
 #image-novo-dado,
@@ -160,4 +161,8 @@ button[type="submit"] {
     height: 100%;
     margin: 15px auto;
     padding: 25px 25px 25px 25px;
+}
+
+.inserted-value{
+    color: grey;
 }

@@ -7,6 +7,7 @@ import { Draw, Modify, Snap } from 'ol/interaction';
 import { fromLonLat } from 'ol/proj';
 import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
+import axios from 'axios';
 import MapContainer from './styled';
 
 function OpenLayerMap() {
@@ -63,20 +64,17 @@ function OpenLayerMap() {
 
   const enviarParaAPI = () => {
     const features = drawSourceRef.current.getFeatures();
-    // Envie as features para a API aqui (exemplo fictício)
-    fetch('http://sua-api.com/salvar-dados', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(features)
-    })
+    const coord = features[0].getGeometry().getCoordinates();
+    console.log(coord);
+
+    // Envie as features para a API aqui (Enviando coordenadas do primeiro ponto)
+    axios.post('URL_DA_API', coord)
       .then(response => response.json())
       .then(data => {
         console.log('Dados salvos com sucesso:', data);
       })
       .catch(error => {
-        console.error('Erro ao salvar os dados:', error);
+        console.error('Erro ao salvar os dados:', error.message);
       });
   };
 
