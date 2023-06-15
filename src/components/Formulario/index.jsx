@@ -192,27 +192,44 @@ function Formulario() {
   const handleAddInput = (event) => {
     event.preventDefault();
     if (documento && variavel && inputValue) {
-      setFormulario([
-        ...formulario,
-        {
-          documento: documento,
-          nameDocumento: variaveis[documento].label,
-          variavel: variavel,
-          nameVariavel: variaveis[documento].options[variavel],
-          valor: inputValue,
-          referencia: referencia,
-          dataDocumento: dataDocumento,
-          areaAnalise: areaAnalise,
-          id: uuid()
-        }
-      ]);
-      setReferencia("");
-      setDataDocumento("");
-      setAreaAnalise("");
-      setDocumento("");
-      setVariavel("");
-      setInputValue("");
-    }
+      if(formulario.length === 0){
+        setFormulario([
+          ...formulario,
+          {
+            documento: documento,
+            nameDocumento: variaveis[documento].label,
+            variavel: variavel,
+            nameVariavel: variaveis[documento].options[variavel],
+            valor: inputValue,
+            referencia: referencia,
+            dataDocumento: dataDocumento,
+            areaAnalise: areaAnalise,
+            id: uuid()
+          }
+        ]);
+      }
+      else{
+        setFormulario([
+          ...formulario,
+          {
+            documento: documento,
+            nameDocumento: variaveis[documento].label,
+            variavel: variavel,
+            nameVariavel: variaveis[documento].options[variavel],
+            valor: inputValue,
+            id: uuid()
+          }
+        ]);
+      }
+        setReferencia("");
+        setDataDocumento("");
+        setAreaAnalise("");
+        setDocumento("");
+        setVariavel("");
+        setInputValue(""); 
+      }
+    
+
   };
 
   const handleSubmit = (event) => {
@@ -242,6 +259,7 @@ function Formulario() {
           "referencia": referencia,
         })
       );
+      console.log(jsonList);
 
       Object.keys(jsonList).forEach((key) => {
         formData.append(key, jsonList[key]);
