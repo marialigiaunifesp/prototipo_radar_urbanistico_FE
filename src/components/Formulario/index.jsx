@@ -20,20 +20,20 @@ function Formulario() {
   const [areaAnalise, setAreaAnalise] = useState("");
 
   const variaveis = {
-    processoJudicial: {
+    processo_judicial: {
       label: "Processo Judicial",
       options: {
-        numeroProcesso: "Número do Processo",
-        nomeParteRequerente: "Nome da parte Requerente",
-        nomeParteRequerida: "Nome da parte Requerida",
-        RGParteRequerida: "RG da parte Requerida",
-        RGParteRequerente: "RG da parte Requerente",
-        CPFParteRequerida: "CPF da parte Requerida",
-        CPFParteRequerente: "CPF da parte Requerente",
-        numeroCartaPrecatorioOrigem: "Nº da Carta Precatório na Origem",
-        nomeAdvogado: "Nome do Advogado",
+        numero_processo: "Número do Processo",
+        nome_parte_requerente: "Nome da parte Requerente",
+        nome_parte_requerida: "Nome da parte Requerida",
+        rg_requerida: "RG da parte Requerida",
+        rg_requerente: "RG da parte Requerente",
+        cpf_requerida: "CPF da parte Requerida",
+        cpf_requerente: "CPF da parte Requerente",
+        numero_carta: "Nº da Carta Precatório na Origem",
+        nomde_advogado: "Nome do Advogado",
         OAB: "OAB",
-        numeroDocumentoDelegacia: "Nº do Documento na Delegacia",
+        documento_delegacia: "Nº do Documento na Delegacia",
         CDA: "CDA",
         classe: "Classe",
         area: "Área",
@@ -42,10 +42,10 @@ function Formulario() {
         fara: "Vara",
         juiz: "Juiz",
         confte: "Confte",
-        dataMovimentacoes: "Data das Movimentações",
+        data_movimentacoes: "Data das Movimentações",
         despacho: "Despacho",
-        codigoConsultaProcesso: "Código de consulta do processo",
-        prazoManifestacaoJudicial: "Prazo para manifestação judicial",
+        codigo_consulta_processo: "Código de consulta do processo",
+        prazo_manifestacao_judicial: "Prazo para manifestação judicial",
       },
     },
     matricula_imovel: {
@@ -79,25 +79,25 @@ function Formulario() {
         comentario: "Comentário sobre Ofício",
       },
     },
-    conhecimentoLugar: {
+    conhecimento_lugar: {
       label: "Conhecimento do Lugar",
       options: {
         regiao: "Regiao",
       },
     },
-    diversasFontes: {
+    diversas_fontes: {
       label: "Diversas Fontes",
       options: {
-        CPFProprietario: "CPF do Proprietário",
-        areaImovel: "Área do Imóvel",
+        cpf_proprietario: "CPF do Proprietário",
+        area_imovel: "Área do Imóvel",
         CCIR: "CCIR",
         unidade: "Unidade",
         CNPJ: "CNPJ",
-        telefoneContato: "Telefone de Contato",
-        emailContato: "E-mail de Contato",
-        possuiPlantaParcelamento: "Possui Planta de Parcelamento",
-        levantamentoPlanialtimetrico: "Levantamento Planialtimétrico",
-        coordenadasAproximadasLocal: "Coordenadas Aproximadas do Local",
+        telefone_contato: "Telefone de Contato",
+        email_contato: "E-mail de Contato",
+        possui_planta_parcelamento: "Possui Planta de Parcelamento",
+        levantamento_planialtimetrico: "Levantamento Planialtimétrico",
+        coordenada_aproxima: "Coordenadas Aproximadas do Local",
       },
     },
     contrato_compra_venda: {
@@ -109,81 +109,81 @@ function Formulario() {
     vistoria: {
       label: "Vistoria",
       options: {
-        energiaEletricaDomiciliar: "Energia elétrica domiciliar",
-        abastecimentoAgua: "Abastecimento de água",
-        coletaTratamentoEsgotoSanitario:
+        energia_eletrica: "Energia elétrica domiciliar",
+        abastecimento_agua: "Abastecimento de água",
+        coleta_tratamento_esgoto:
           "Coleta e Tratamento de Esgoto Sanitário",
-        iluminaçãoPublica: "Iluminação Pública",
-        drenagemAguasPluviais: "Drenagem de águas pluviais",
+        iluminacao_publica: "Iluminação Pública",
+        drenagem_pluvial: "Drenagem de águas pluviais",
         pavimentacao: "Pavimentação",
-        localParceladaAcessadaDiretamenteViaPublica:
+        local_parcelada:
           "Local parcelada acessada diretamente por via pública?",
-        existenciaEdificacoesLocal: "Existência de edificações no local",
-        quantidadeAproximadaEdificacoes: "Quantidade aproximada de edificações",
-        usoConstatado: "Uso Constatado",
-        pontoAtencao: "Ponto de atenção",
-        lotesDemarcadosOuFechamentoArea:
+        existencia_edificacoes: "Existência de edificações no local",
+        quantidade_aproximada_edificacoes: "Quantidade aproximada de edificações",
+        uso_constatado: "Uso Constatado",
+        ponto_atencao: "Ponto de atenção",
+        lotes_demarcados:
           "Lotes demarcados ou fechamento da área?",
-        existenciaColetaResiduosSolidosLocal:
+        coleta_residuos_solidos:
           "Existência de coleta de resíduos sólidos no local",
-        proximidadeLocalAtendidoTransporteColetivo:
+        proximidade_local_transporte:
           "Proximidade de local atendido por transporte coletivo",
       },
     },
-    processoAdministrativo: {
+    processo_administrativo: {
       label: "Processo Administrativo",
       options: {
-        advogadoParte: "Advogado da Parte",
-        responsávelTecnicoParte: "Responsável técnico da parte",
-        pontoFocalMoradores: "Ponto Focal dos Moradores",
+        advogado_parte: "Advogado da Parte",
+        responsavel_tecnico_parte: "Responsável técnico da parte",
+        ponto_focal_moradores: "Ponto Focal dos Moradores",
         notificacao: "Notificação",
-        prazoManifestacao: "Prazo para manifestação (notificação)",
-        dataPublicacaoNotificacaoBoletimOficial:
+        prazo_manifestacao: "Prazo para manifestação (notificação)",
+        data_publicacao_notificacao:
           "Data de publicação da notificação em boletim oficial (quando houver)",
-        recursoNotificacao: "Recurso de Notificação",
-        processoREURB: "Processo de REURB (mestre)",
+        recurso_notificacao: "Recurso de Notificação",
+        processo_REURB: "Processo de REURB (mestre)",
       },
     },
-    boletimOficial: {
+    boletim_oficial: {
       label: "Boletim Oficial",
       options: {
-        linkPublicaoEdital: "Link de publicação de edital",
+        link_publicao_edital: "Link de publicação de edital",
       },
     },
-    fichaCadastramentoSocioeconomico: {
+    ficha_socioeconomico: {
       label: "Ficha de Cadastramento Socioeconômico",
       options: {
-        fichaCadastramentoIndividual: "Ficha de cadastramento individual",
+        ficha_cadastramento_individual: "Ficha de cadastramento individual",
       },
     },
     legislacao: {
       label: "Legislação",
       options: {
-        zonaUso: "Zona de uso",
+        zona_uso: "Zona de uso",
       },
     },
-    dataGEOAmbiente: {
+    datageo_ambiente: {
       label: "DataGEO Ambiente",
       options: {
-        autoInfracaoAmbiental: "Auto de Infração Ambiental (AIA)",
+        AIA: "Auto de Infração Ambiental (AIA)",
       },
     },
     IBGE: {
       label: "IBGE",
       options: {
-        aglomeradoSubnormal: "Aglomerado subnormal",
-        areaRisco: "Área de risco - BATER",
-        Cod_Mun: "Cod_Mun",
+        aglomerado_subnormal: "Aglomerado subnormal",
+        area_risco: "Área de risco - BATER",
+        cod_mun: "Cod_Mun",
       },
     },
-    dadoGeografico: {
+    datageo: {
       label: "Dado Geográfico",
       options: {
-        distanciaEquipamentoSaudeProximo:
+        distancia_saude_proximo:
           "Distância do equipamento de saúde mais próximo",
-        distanciEquipamentoEducacaoProximo:
+        distancia_educacao_proximo:
           "Distância do equipamento de educação mais próximo",
-        proximidadeLocalAtendidoTransporteColetivo:
+        proximidade_local_atendido_transporte:
           "Proximidade de local atendido por transporte coletivo",
       },
     },
