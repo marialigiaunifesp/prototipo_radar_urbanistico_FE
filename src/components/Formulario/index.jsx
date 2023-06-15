@@ -233,6 +233,7 @@ function Formulario() {
   };
 
   const handleSubmit = (event) => {
+    const docs = {};
     event.preventDefault();
     if (formulario.length > 0) {
       // aqui enviar os valores do formulário para o servidor
@@ -241,24 +242,31 @@ function Formulario() {
       if (selectedFile)
         formData.append(selectedFile.name, selectedFile);
 
+      for(let i = 0; i < formulario.length; i+=1){
+        const name = formulario[i].documento;
+        const variable = formulario[i].variavel;
+        const val = formulario[i].valor;
+        if(!(name in docs)){
+          docs[name] = {}
+        }
+        docs[name][variable] = val;
+      }
 
       const jsonList = formulario.map(
         ({
-          documento,
-          variavel,
-          valor,
           areaAnalise,
           dataDocumento,
           referencia,
         }) => ({
-          "documento": variaveis[documento].label,
-          "variavel": variaveis[documento].options[variavel],
-          "valor": valor,
           "areaAnalise": areaAnalise,
           "dataDocumento": dataDocumento,
           "referencia": referencia,
         })
       );
+
+      const json = {...docs, ...jsonList[0]};
+      console.log(JSON.stringify(json));
+
       console.log(jsonList);
 
       Object.keys(jsonList).forEach((key) => {
