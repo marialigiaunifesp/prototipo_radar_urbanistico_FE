@@ -267,13 +267,13 @@ function Formulario() {
       const json = {...docs, ...jsonList[0]};
       console.log(JSON.stringify(json));
 
-      console.log(jsonList);
+      // console.log(jsonList);
 
       Object.keys(jsonList).forEach((key) => {
         formData.append(key, jsonList[key]);
       });
 
-      console.log(formData);
+      // console.log(formData);
 
       axios.post('URL_DA_SUA_API', json)
         .then(response => {
