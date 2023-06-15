@@ -53,7 +53,7 @@ function Formulario() {
       options: {
         numero: "Número matrícula",
         numero_antigo: "Número matrícula (antiga)",
-        CRI: "Cartório de Registro de Imóveis (CRI)",
+        cri: "Cartório de Registro de Imóveis (CRI)",
         comarca: "Comarca",
         inscricao_imobiliaria: "Inscrição Imobiliária",
         endereco: "Endereço",
