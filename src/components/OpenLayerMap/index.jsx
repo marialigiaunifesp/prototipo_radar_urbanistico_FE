@@ -66,9 +66,21 @@ function OpenLayerMap() {
     const features = drawSourceRef.current.getFeatures();
     const coord = features[0].getGeometry().getCoordinates();
     console.log(coord);
-
+    const geojson = {
+      type: "FeatureCollection",
+      features: [{
+        type: "Feature",
+        properties: {},
+        geometry: {
+        coordinates: [
+          coord[0],
+          coord[1]
+          ],
+        type: "Point"
+      }}]};
+      
     // Envie as features para a API aqui (Enviando coordenadas do primeiro ponto)
-    axios.post('URL_DA_API', coord)
+    axios.post('URL_DA_SUA_API', geojson)
       .then(response => response.json())
       .then(data => {
         console.log('Dados salvos com sucesso:', data);
