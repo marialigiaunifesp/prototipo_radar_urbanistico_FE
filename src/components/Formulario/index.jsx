@@ -48,35 +48,35 @@ function Formulario() {
         prazoManifestacaoJudicial: "Prazo para manifestação judicial",
       },
     },
-    matriculaImovel: {
+    matricula_imovel: {
       label: "Matricula do Imóvel",
       options: {
-        numeroMatricula: "Número matrícula",
-        numeroMatriculaAntiga: "Número matrícula (antiga)",
-        cartorioRegistroImoveis: "Cartório de Registro de Imóveis (CRI)",
+        numero: "Número matrícula",
+        numero_antigo: "Número matrícula (antiga)",
+        CRI: "Cartório de Registro de Imóveis (CRI)",
         comarca: "Comarca",
-        inscricaoImobiliaria: "Inscrição Imobiliária",
+        inscricao_imobiliaria: "Inscrição Imobiliária",
         endereco: "Endereço",
         bairro: "Bairro",
         regiao: "Regiao",
-        denominacaoImovel: "Denominação do Imóvel",
-        codigoINCRA: "Código INCRA",
+        denominacao_imovel: "Denominação do Imóvel",
+        codigo_INCRA: "Código INCRA",
         SICAR: "SICAR",
-        SICARSP: "SICAR-SP",
+        SICAR_SP: "SICAR-SP",
         proprietario: "Proprietário",
         vendedor: "Vendedor",
-        formaAquisicao: "Forma de Aquisição",
-        dataRegistroTransacao: "Data do registro da Transação",
+        forma_aquisicao: "Forma de Aquisição",
+        data_transacao: "Data do registro da Transação",
         CCIR: "CCIR",
       },
     },
     oficio: {
       label: "Ofício",
       options: {
-        numeroOficio: "Número do ofício",
-        orgaoOuInstituicaoRemetenteOficio:
+        numero: "Número do ofício",
+        orgao:
           "Órgão ou Instituição Remetente do Ofício",
-        comentarioSobreOficio: "Comentário sobre Ofício",
+        comentario: "Comentário sobre Ofício",
       },
     },
     conhecimentoLugar: {
@@ -100,10 +100,10 @@ function Formulario() {
         coordenadasAproximadasLocal: "Coordenadas Aproximadas do Local",
       },
     },
-    contratoCompraVenda: {
+    contrato_compra_venda: {
       label: "Contrato de Compra e Venda",
       options: {
-        nomeEmpreendimento: "Nome do Empreendimento",
+        nome_empreendimento: "Nome do Empreendimento",
       },
     },
     vistoria: {
