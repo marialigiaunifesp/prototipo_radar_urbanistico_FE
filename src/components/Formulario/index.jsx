@@ -275,7 +275,7 @@ function Formulario() {
 
       console.log(formData);
 
-      axios.post('URL_DA_SUA_API', formData)
+      axios.post('URL_DA_SUA_API', json)
         .then(response => {
           console.log('Dados enviados com sucesso:', response.data);
         })
