@@ -9,10 +9,12 @@ import Button from '@mui/material/Button';
 import { ThemeProvider } from 'styled-components';
 import theme from '../../configs/theme';
 import { LoginContainer, Title } from './styled';
+import { AuthContext } from '../../context/auth';
 
 function Login() {
   const [username, setUserName] = useState('');
   const [password, setPassword] = useState('');
+  const { authenticated, login } = useContext(AuthContext);
 
 
   const handleSubmit = (event) => {
