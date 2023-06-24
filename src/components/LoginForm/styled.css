@@ -1,24 +1,37 @@
 .form-login {
+    font-size: 0.875rem;
+    font-weight: 500;
     background:rgb(255, 255, 255);
     text-align: center;
     display: flex; 
     flex-flow: column;
     text-align: center;
-    height: 20vh;
+    height: 260px;
     justify-content: space-evenly;
     align-items: center;
 }
 .input-login{
     margin-bottom: 2px;
-    height: 35px;
-    width: 250px;
+    display: flex;
+    flex-flow: column;
+    text-align: -webkit-left;
 }
 .button-login{
     width: 250px;
 }
 
 .login-container{
-    height: 50%;
+    height: 70%;
     display: flex;
     place-items: center;
 }
+#credencial{
+    font-style: italic;
+    color: #cc5858;
+}
+
+.input-login label{
+    font-size: 0.95rem;
+    font-weight: 100;
+}
+

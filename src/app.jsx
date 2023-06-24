@@ -6,6 +6,7 @@ import theme from './configs/theme';
 import Login from './components/LoginForm';
 import GlobalStyles from './styles/GlobalStyles';
 import Formulario from './components/Formulario';
+import OpenLayerMap from './components/OpenLayerMap';
 import HeaderNav from './components/HeaderNav'
 import { AuthContext, AuthProvider } from './context/auth';
 
@@ -34,6 +35,7 @@ function App() {
                 <AuthProvider>
                     <HeaderNav />
                     <Routes>
+                        <Route path="/map" element={<Private><OpenLayerMap /></Private>} />
                         <Route path="/formulario" element={<Private><Formulario /></Private>} />
                         <Route path="/" element={<Login />} />
                     </Routes>

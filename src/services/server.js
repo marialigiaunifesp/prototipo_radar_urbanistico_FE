@@ -27,7 +27,6 @@ app.post('/sessions', (req, res) => {
     const user = fakeDatabase.find(user => user.username === username && user.password === password);
     if (user) {
         const token = jwt.sign({ username: user.username }, "J7bD5pX9qR3wM2sZ8tN6", { expiresIn: '1h' });
-       
         res.status(200).json({ message: 'Credenciais válidas. O usuário pode entrar.', token, username });
     } else {
         res.status(401).json({ message: 'Credenciais inválidas. O usuário não pode entrar.' });

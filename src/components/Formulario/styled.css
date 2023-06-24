@@ -1,19 +1,19 @@
+.index{
+    height: 100% !important;
+}
 
 p {
     margin: 0;
 }
 
-#titulo-formulario{
+#titulo-formulario {
     margin: 10px 0 10px 22px;
 }
 
 .form-formulario {
-    
-    background-color: #EBE3E3;
-    border: 3px solid #EBE3E3;
     border-radius: 10px;
     width: 90%;
-    height: 100%;
+    height: auto;
     margin: 50px auto;
 }
 
@@ -21,14 +21,18 @@ p {
     font-weight: bolder;
     margin-bottom: 10px;
 }
-.form-box{
+
+.form-box {
     padding-top: 15px;
     padding-bottom: 15px;
+    
+    background-color: #EBE3E3;
+    border: 3px solid #EBE3E3;
 }
+
 .form-box,
 .novo-dado,
-.novo-file
-{
+.novo-file {
     border: 3px solid #fff;
     border-radius: 10px;
 
@@ -38,11 +42,11 @@ p {
 
 .flex-box {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    justify-content: center;
     width: 1000px;
-    margin: 0 auto;
+    margin: 15px auto;
     height: 135px;
+
 }
 
 .documento-box,
@@ -61,12 +65,13 @@ p {
 .referencia-box,
 .data-box {
     width: 250px;
+    margin: 0px 30px 0px 0px;
 }
 
 #valor,
 #areaAnalise {
     width: 350px;
-    
+
 }
 
 label {
@@ -94,6 +99,8 @@ small {
     display: flex;
     align-items: center;
     justify-content: center;
+    background-color: #EBE3E3;
+    border: 3px solid #fff;
 }
 
 .novo-file label {
@@ -132,12 +139,12 @@ small {
     background-position-y: center;
 }
 
-.submit{
+.submit {
     padding: 5px;
     margin: 5px auto;
 }
 
-.button-form{
+.button-form {
     width: 170px;
     height: 40px;
     background: #E50F0F;
@@ -149,20 +156,64 @@ small {
     align-items: center;
 }
 
-#titulo-janela-avisos{
+#titulo-janela-avisos {
     color: #C30000;
     margin: 0 0 20px 0;
 }
 
-.janela-avisos{
+.janela-avisos {
     background: #D9D9D9;
     border-radius: 10px;
     width: 90%;
-    height: 100%;
+    height: auto;
     margin: 15px auto;
     padding: 25px 25px 25px 25px;
 }
 
-.inserted-value{
+.inserted-value {
     color: grey;
+}
+
+@media (max-width: 1100px) {
+
+   
+    .documento-box,
+    .variavel-box,
+    .referencia-box,
+    .data-box,
+    .valor-box,
+    .areaAnalise-box {
+        margin: 0 auto;
+    }
+
+    .flex-box {
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr 1fr 1fr;
+        height: 100%;
+        width: 100%;
+        margin-top: 10px;
+    }
+
+    select {
+        place-self: inherit;
+    }
+
+    .form-box {
+        display: grid;
+        grid-template-columns: 1fr;
+        
+    }
+
+    .form-formulario {
+        height: auto;
+    }
+
+    .valor-box,
+    .areaAnalise-box,
+    #valor,
+    #areaAnalise {
+        width: 250px;
+
+    }
 }

@@ -7,10 +7,12 @@ export const AuthContext = createContext();
 /*  eslint-disable react/jsx-no-constructed-context-values */
 /*  eslint-disable prefer-destructuring */
 /*  eslint-disable react/prop-types */
+/* eslint-disable no-unused-vars */ 
 export function AuthProvider({ children }) {
     const navigate = useNavigate();
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true)
+    const [invalidUser, setInvalidUser] = useState(false)
 
     useEffect(() => {
         const recoveredUser = localStorage.getItem('user');
@@ -25,19 +27,25 @@ export function AuthProvider({ children }) {
 
         // conexão com a api para confirmação de token
         const response = await createSession(username, password);
-
-        const loggedUser = response.data.username;
-        const token = response.data.token;
-
-        localStorage.setItem("token", token);
-        localStorage.setItem("user", loggedUser);
-
-        // setando header padrão nas requisições, enviando o token em todas as requisições
-        api.defaults.headers.Authorization = `Bearer ${token}`;
         
-        setUser(loggedUser)
-        navigate("/formulario");
+        if (response.status === 200){
+            const loggedUser = response.data.username;
+            const token = response.data.token;
 
+            localStorage.setItem("token", token);
+            localStorage.setItem("user", loggedUser);
+
+            // setando header padrão nas requisições, enviando o token em todas as requisições
+            api.defaults.headers.Authorization = `Bearer ${token}`;
+            setInvalidUser(false);
+            setUser(loggedUser)
+            navigate("/formulario");
+        }
+        else{
+           
+            setInvalidUser(true);
+            navigate("/");
+        }
     };
     const logout = () => {
         console.log("logout");
@@ -50,7 +58,7 @@ export function AuthProvider({ children }) {
     };
 
     return (
-        <AuthContext.Provider value={{ authenticated: !!user, user, loading, login, logout }}>
+        <AuthContext.Provider value={{ authenticated: !!user, user, loading, login, logout, invalidUser }}>
             {children}
         </AuthContext.Provider>
     );
