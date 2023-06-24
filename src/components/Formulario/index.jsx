@@ -279,7 +279,7 @@ function Formulario() {
     <div className='index'>
 
 
-      <form onSubmit={handleSubmit}>
+      <form className = "form-formulario" onSubmit={handleSubmit}>
         <p id="titulo-formulario">INSERIR DADOS DOCUMENTAIS</p>
 
         {formulario.map((input) => (
@@ -452,7 +452,7 @@ function Formulario() {
         {(formulario.length > 0 &&
           (
             <div className="submit">
-              <button type="submit">Finalizar</button>
+              <button className="button-form" type="submit">Finalizar</button>
             </div>
           )
         )}

@@ -7,7 +7,7 @@ p {
     margin: 10px 0 10px 22px;
 }
 
-form {
+.form-formulario {
     
     background-color: #EBE3E3;
     border: 3px solid #EBE3E3;
@@ -137,7 +137,7 @@ small {
     margin: 5px auto;
 }
 
-button[type="submit"] {
+.button-form{
     width: 170px;
     height: 40px;
     background: #E50F0F;
