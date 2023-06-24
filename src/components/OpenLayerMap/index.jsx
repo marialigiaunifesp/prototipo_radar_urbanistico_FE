@@ -3,11 +3,14 @@ import 'ol/ol.css';
 import { Map, View } from 'ol';
 import { Tile as TileLayer, Vector as VectorLayer } from 'ol/layer';
 import { OSM, Vector as VectorSource } from 'ol/source';
-import { Draw, Modify, Snap } from 'ol/interaction';
+// import { Draw, Modify, Snap } from 'ol/interaction';
 import { fromLonLat } from 'ol/proj';
 import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
-import axios from 'axios';
+// import axios from 'axios';
+import GeoJSON from 'ol/format/GeoJSON';
+import Select from 'ol/interaction/Select';
+
 import MapContainer from './styled';
 
 function OpenLayerMap() {
@@ -15,21 +18,27 @@ function OpenLayerMap() {
   const drawSourceRef = useRef(null);
   const modeRef = useRef('Point');
 
+  const osmLayer = new TileLayer({
+          source: new OSM(),
+        });
+  const mainLayers = [osmLayer];
+  const mainView = new View({
+        center: fromLonLat([-45.9741, -23.3066]),
+        zoom: 12
+      });
+  const select = new Select();
+
   useEffect(() => {
     const map = new Map({
-      layers: [
-        new TileLayer({
-          source: new OSM(),
-        }),
-      ],
+      layers: mainLayers,
       target: mapRef.current,
-      view: new View({
-        center: fromLonLat([-45.8875, -23.1794]),
-        zoom: 13
-      }),
+      view: mainView
     });
-
-    const drawSource = new VectorSource();
+    const drawSource = new VectorSource({
+      // format: new GeoJSON().readFeatures(data),
+      format: new GeoJSON(),
+      url: './sicar_area_imovel.geojson',
+    });
     const drawLayer = new VectorLayer({
       source: drawSource
     });
@@ -37,9 +46,11 @@ function OpenLayerMap() {
     map.addLayer(drawLayer);
 
     // Remover as interações antigas
-    map.getInteractions().clear();
+    // map.getInteractions().clear();
+    map.addInteraction(select);
 
     // Adicionar as novas interações com base no valor atual do modeRef
+    /* 
     if (modeRef.current === 'Point') {
       map.addInteraction(new Draw({ source: drawSource, type: 'Point' }));
     } else if (modeRef.current === 'Polygon') {
@@ -48,13 +59,40 @@ function OpenLayerMap() {
 
     map.addInteraction(new Modify({ source: drawSource }));
     map.addInteraction(new Snap({ source: drawSource }));
-
+    */
     drawSourceRef.current = drawSource;
-
     return () => {
       map.setTarget(null);
     };
   }, [mapRef]);
+
+  const sendToForm = () => {
+      // Aqui você pode obter os dados da feição selecionada, como ID ou outros atributos relevantes
+  // var feicaoId = feature.getId();
+
+  // Abra uma nova janela para edição dos dados
+  const url = "form?id=";
+
+  window.open(url);
+  }
+
+  select.on('select', ()=>{
+    const popup = window.open("", "Pop-up", "width=400,height=300");
+    const attrs = select.getFeatures().item(0);
+    console.log(attrs.get('COD_IMOVEL'));
+    const text = ['SICAR:  ', attrs.get('COD_IMOVEL')].join('');
+    popup.document.write(text);
+
+
+
+    const botao = popup.document.createElement("button");
+    botao.innerHTML = "Editar Dados";
+    botao.addEventListener("click", () => {
+      sendToForm(text);
+    });
+    popup.document.body.appendChild(botao);
+    
+  });
 
   const handleModeChange = (newMode) => {
     if (newMode !== modeRef.current) {
@@ -62,6 +100,8 @@ function OpenLayerMap() {
     }
   };
 
+  
+  /*
   const enviarParaAPI = () => {
     const features = drawSourceRef.current.getFeatures();
     const coord = features[0].getGeometry().getCoordinates();
@@ -80,7 +120,7 @@ function OpenLayerMap() {
       }}]};
       
     // Envie as features para a API aqui (Enviando coordenadas do primeiro ponto)
-    axios.post('URL_DA_SUA_API', geojson)
+    axios.post('http://localhost:8000/api/coordinate-create/', geojson)
       .then(response => response.json())
       .then(data => {
         console.log('Dados salvos com sucesso:', data);
@@ -88,8 +128,9 @@ function OpenLayerMap() {
       .catch(error => {
         console.error('Erro ao salvar os dados:', error.message);
       });
+      
   };
-
+  */
   return (
     <Grid container spacing={2}>
 
@@ -103,7 +144,7 @@ function OpenLayerMap() {
       </Grid>
       <Grid item>
         <Button variant="contained" color='secondary'
-          onClick={enviarParaAPI}>Salvar</Button>
+          onClick={sendToForm}>Editar</Button>
       </Grid>
       <MapContainer ref={mapRef}/>
     </Grid>

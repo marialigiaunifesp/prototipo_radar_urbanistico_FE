@@ -275,7 +275,7 @@ function Formulario() {
 
       // console.log(formData);
 
-      axios.post('URL_DA_SUA_API', json)
+      axios.post('http://localhost:8000/api/form-create/', json)
         .then(response => {
           console.log('Dados enviados com sucesso:', response.data);
         })
@@ -450,9 +450,13 @@ function Formulario() {
 
             <div className="areaAnalise-box">
               <label htmlFor="areaAnalise">Área de análise</label>
-              <select id="areaAnalise">
-                <option value="" disabled selected> </option>
-              </select>
+              <input
+                id={areaAnalise}
+                type="text"
+                value={areaAnalise}
+                onChange={(e) => setAreaAnalise(e.target.value)}
+
+              />
 
               <small >Selecionar uma das opções possíveis</small>
             </div>
