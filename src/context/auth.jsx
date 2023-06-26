@@ -13,6 +13,7 @@ export function AuthProvider({ children }) {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true)
     const [invalidUser, setInvalidUser] = useState(false)
+    
 
     useEffect(() => {
         const recoveredUser = localStorage.getItem('user');
@@ -34,12 +35,12 @@ export function AuthProvider({ children }) {
 
             localStorage.setItem("token", token);
             localStorage.setItem("user", loggedUser);
-
+        
             // setando header padrão nas requisições, enviando o token em todas as requisições
             api.defaults.headers.Authorization = `Bearer ${token}`;
             setInvalidUser(false);
             setUser(loggedUser)
-            navigate("/formulario");
+            navigate("/map");
         }
         else{
            
@@ -56,6 +57,8 @@ export function AuthProvider({ children }) {
         setUser(null);
         navigate("/");
     };
+
+    
 
     return (
         <AuthContext.Provider value={{ authenticated: !!user, user, loading, login, logout, invalidUser }}>

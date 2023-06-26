@@ -170,7 +170,7 @@ small {
     padding: 25px 25px 25px 25px;
 }
 
-.inserted-value {
+.inserted-value, .areaAnalise-box input {
     color: grey;
 }
 

@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, useContext } from 'react';
 import 'ol/ol.css';
 import Overlay from 'ol/Overlay';
 import { Map, View } from 'ol';
@@ -13,11 +13,17 @@ import Grid from '@mui/material/Grid';
 import GeoJSON from 'ol/format/GeoJSON';
 import Select from 'ol/interaction/Select';
 import './styled.css';
+import { useNavigate } from "react-router-dom";
+import { AuthContext} from '../../context/auth';
 
 function OpenLayerMap() {
   const mapRef = useRef(null);
   const containerRef = useRef(null);
   const [content, setContent] = useState('');
+  const [sicarNumber, setSicarNumber] = useState('');
+  const [coordinates, setCoordinates] = useState([]);
+  const navigate = useNavigate();
+  const { sicar } = useContext(AuthContext);
 
   const closerRef = useRef(null);
   const drawSourceRef = useRef(null);
@@ -26,8 +32,11 @@ function OpenLayerMap() {
   const overlayRef = useRef(null);
 
   const sendToForm = () => {
-    const url = "form?id=";
-    window.open(url);
+    
+    localStorage.setItem("sicar", sicarNumber);
+    localStorage.setItem("coordinates", coordinates);
+
+    navigate("/formulario");
   }
 
   const handleMapClick = () => {
@@ -41,9 +50,10 @@ function OpenLayerMap() {
 
         if (attrs) {
           const text = ['SICAR:  ', attrs.get('COD_IMOVEL')].join('');
-
+          setSicarNumber(attrs.get('COD_IMOVEL'));
+          setCoordinates(attrs.getGeometry().getCoordinates());  // Atualizando o estado com o novo conteúdo
           setContent(text);  // Atualizando o estado com o novo conteúdo
-          overlayRef.current.setPosition(attrs.getGeometry().getCoordinates());
+          overlayRef.current.setPosition(coordinates);
         }
       }
     }, 500);
