@@ -20,20 +20,20 @@ function Formulario() {
   const [areaAnalise, setAreaAnalise] = useState("");
 
   const variaveis = {
-    processoJudicial: {
+    processo_judicial: {
       label: "Processo Judicial",
       options: {
-        numeroProcesso: "Número do Processo",
-        nomeParteRequerente: "Nome da parte Requerente",
-        nomeParteRequerida: "Nome da parte Requerida",
-        RGParteRequerida: "RG da parte Requerida",
-        RGParteRequerente: "RG da parte Requerente",
-        CPFParteRequerida: "CPF da parte Requerida",
-        CPFParteRequerente: "CPF da parte Requerente",
-        numeroCartaPrecatorioOrigem: "Nº da Carta Precatório na Origem",
-        nomeAdvogado: "Nome do Advogado",
+        numero_processo: "Número do Processo",
+        nome_parte_requerente: "Nome da parte Requerente",
+        nome_parte_requerida: "Nome da parte Requerida",
+        rg_requerida: "RG da parte Requerida",
+        rg_requerente: "RG da parte Requerente",
+        cpf_requerida: "CPF da parte Requerida",
+        cpf_requerente: "CPF da parte Requerente",
+        numero_carta: "Nº da Carta Precatório na Origem",
+        nomde_advogado: "Nome do Advogado",
         OAB: "OAB",
-        numeroDocumentoDelegacia: "Nº do Documento na Delegacia",
+        documento_delegacia: "Nº do Documento na Delegacia",
         CDA: "CDA",
         classe: "Classe",
         area: "Área",
@@ -42,148 +42,148 @@ function Formulario() {
         fara: "Vara",
         juiz: "Juiz",
         confte: "Confte",
-        dataMovimentacoes: "Data das Movimentações",
+        data_movimentacoes: "Data das Movimentações",
         despacho: "Despacho",
-        codigoConsultaProcesso: "Código de consulta do processo",
-        prazoManifestacaoJudicial: "Prazo para manifestação judicial",
+        codigo_consulta_processo: "Código de consulta do processo",
+        prazo_manifestacao_judicial: "Prazo para manifestação judicial",
       },
     },
-    matriculaImovel: {
+    matricula_imovel: {
       label: "Matricula do Imóvel",
       options: {
-        numeroMatricula: "Número matrícula",
-        numeroMatriculaAntiga: "Número matrícula (antiga)",
-        cartorioRegistroImoveis: "Cartório de Registro de Imóveis (CRI)",
+        numero: "Número matrícula",
+        numero_antigo: "Número matrícula (antiga)",
+        cri: "Cartório de Registro de Imóveis (CRI)",
         comarca: "Comarca",
-        inscricaoImobiliaria: "Inscrição Imobiliária",
+        inscricao_imobiliaria: "Inscrição Imobiliária",
         endereco: "Endereço",
         bairro: "Bairro",
         regiao: "Regiao",
-        denominacaoImovel: "Denominação do Imóvel",
-        codigoINCRA: "Código INCRA",
+        denominacao_imovel: "Denominação do Imóvel",
+        codigo_INCRA: "Código INCRA",
         SICAR: "SICAR",
-        SICARSP: "SICAR-SP",
+        SICAR_SP: "SICAR-SP",
         proprietario: "Proprietário",
         vendedor: "Vendedor",
-        formaAquisicao: "Forma de Aquisição",
-        dataRegistroTransacao: "Data do registro da Transação",
+        forma_aquisicao: "Forma de Aquisição",
+        data_transacao: "Data do registro da Transação",
         CCIR: "CCIR",
       },
     },
     oficio: {
       label: "Ofício",
       options: {
-        numeroOficio: "Número do ofício",
-        orgaoOuInstituicaoRemetenteOficio:
+        numero: "Número do ofício",
+        orgao:
           "Órgão ou Instituição Remetente do Ofício",
-        comentarioSobreOficio: "Comentário sobre Ofício",
+        comentario: "Comentário sobre Ofício",
       },
     },
-    conhecimentoLugar: {
+    conhecimento_lugar: {
       label: "Conhecimento do Lugar",
       options: {
         regiao: "Regiao",
       },
     },
-    diversasFontes: {
+    diversas_fontes: {
       label: "Diversas Fontes",
       options: {
-        CPFProprietario: "CPF do Proprietário",
-        areaImovel: "Área do Imóvel",
+        cpf_proprietario: "CPF do Proprietário",
+        area_imovel: "Área do Imóvel",
         CCIR: "CCIR",
         unidade: "Unidade",
         CNPJ: "CNPJ",
-        telefoneContato: "Telefone de Contato",
-        emailContato: "E-mail de Contato",
-        possuiPlantaParcelamento: "Possui Planta de Parcelamento",
-        levantamentoPlanialtimetrico: "Levantamento Planialtimétrico",
-        coordenadasAproximadasLocal: "Coordenadas Aproximadas do Local",
+        telefone_contato: "Telefone de Contato",
+        email_contato: "E-mail de Contato",
+        possui_planta_parcelamento: "Possui Planta de Parcelamento",
+        levantamento_planialtimetrico: "Levantamento Planialtimétrico",
+        coordenada_aproxima: "Coordenadas Aproximadas do Local",
       },
     },
-    contratoCompraVenda: {
+    contrato_compra_venda: {
       label: "Contrato de Compra e Venda",
       options: {
-        nomeEmpreendimento: "Nome do Empreendimento",
+        nome_empreendimento: "Nome do Empreendimento",
       },
     },
     vistoria: {
       label: "Vistoria",
       options: {
-        energiaEletricaDomiciliar: "Energia elétrica domiciliar",
-        abastecimentoAgua: "Abastecimento de água",
-        coletaTratamentoEsgotoSanitario:
+        energia_eletrica: "Energia elétrica domiciliar",
+        abastecimento_agua: "Abastecimento de água",
+        coleta_tratamento_esgoto:
           "Coleta e Tratamento de Esgoto Sanitário",
-        iluminaçãoPublica: "Iluminação Pública",
-        drenagemAguasPluviais: "Drenagem de águas pluviais",
+        iluminacao_publica: "Iluminação Pública",
+        drenagem_pluvial: "Drenagem de águas pluviais",
         pavimentacao: "Pavimentação",
-        localParceladaAcessadaDiretamenteViaPublica:
+        local_parcelada:
           "Local parcelada acessada diretamente por via pública?",
-        existenciaEdificacoesLocal: "Existência de edificações no local",
-        quantidadeAproximadaEdificacoes: "Quantidade aproximada de edificações",
-        usoConstatado: "Uso Constatado",
-        pontoAtencao: "Ponto de atenção",
-        lotesDemarcadosOuFechamentoArea:
+        existencia_edificacoes: "Existência de edificações no local",
+        quantidade_aproximada_edificacoes: "Quantidade aproximada de edificações",
+        uso_constatado: "Uso Constatado",
+        ponto_atencao: "Ponto de atenção",
+        lotes_demarcados:
           "Lotes demarcados ou fechamento da área?",
-        existenciaColetaResiduosSolidosLocal:
+        coleta_residuos_solidos:
           "Existência de coleta de resíduos sólidos no local",
-        proximidadeLocalAtendidoTransporteColetivo:
+        proximidade_local_transporte:
           "Proximidade de local atendido por transporte coletivo",
       },
     },
-    processoAdministrativo: {
+    processo_administrativo: {
       label: "Processo Administrativo",
       options: {
-        advogadoParte: "Advogado da Parte",
-        responsávelTecnicoParte: "Responsável técnico da parte",
-        pontoFocalMoradores: "Ponto Focal dos Moradores",
+        advogado_parte: "Advogado da Parte",
+        responsavel_tecnico_parte: "Responsável técnico da parte",
+        ponto_focal_moradores: "Ponto Focal dos Moradores",
         notificacao: "Notificação",
-        prazoManifestacao: "Prazo para manifestação (notificação)",
-        dataPublicacaoNotificacaoBoletimOficial:
+        prazo_manifestacao: "Prazo para manifestação (notificação)",
+        data_publicacao_notificacao:
           "Data de publicação da notificação em boletim oficial (quando houver)",
-        recursoNotificacao: "Recurso de Notificação",
-        processoREURB: "Processo de REURB (mestre)",
+        recurso_notificacao: "Recurso de Notificação",
+        processo_REURB: "Processo de REURB (mestre)",
       },
     },
-    boletimOficial: {
+    boletim_oficial: {
       label: "Boletim Oficial",
       options: {
-        linkPublicaoEdital: "Link de publicação de edital",
+        link_publicao_edital: "Link de publicação de edital",
       },
     },
-    fichaCadastramentoSocioeconomico: {
+    ficha_socioeconomico: {
       label: "Ficha de Cadastramento Socioeconômico",
       options: {
-        fichaCadastramentoIndividual: "Ficha de cadastramento individual",
+        ficha_cadastramento_individual: "Ficha de cadastramento individual",
       },
     },
     legislacao: {
       label: "Legislação",
       options: {
-        zonaUso: "Zona de uso",
+        zona_uso: "Zona de uso",
       },
     },
-    dataGEOAmbiente: {
+    datageo_ambiente: {
       label: "DataGEO Ambiente",
       options: {
-        autoInfracaoAmbiental: "Auto de Infração Ambiental (AIA)",
+        AIA: "Auto de Infração Ambiental (AIA)",
       },
     },
     IBGE: {
       label: "IBGE",
       options: {
-        aglomeradoSubnormal: "Aglomerado subnormal",
-        areaRisco: "Área de risco - BATER",
-        Cod_Mun: "Cod_Mun",
+        aglomerado_subnormal: "Aglomerado subnormal",
+        area_risco: "Área de risco - BATER",
+        cod_mun: "Cod_Mun",
       },
     },
-    dadoGeografico: {
+    datageo: {
       label: "Dado Geográfico",
       options: {
-        distanciaEquipamentoSaudeProximo:
+        distancia_saude_proximo:
           "Distância do equipamento de saúde mais próximo",
-        distanciEquipamentoEducacaoProximo:
+        distancia_educacao_proximo:
           "Distância do equipamento de educação mais próximo",
-        proximidadeLocalAtendidoTransporteColetivo:
+        proximidade_local_atendido_transporte:
           "Proximidade de local atendido por transporte coletivo",
       },
     },
@@ -192,30 +192,48 @@ function Formulario() {
   const handleAddInput = (event) => {
     event.preventDefault();
     if (documento && variavel && inputValue) {
-      setFormulario([
-        ...formulario,
-        {
-          documento: documento,
-          nameDocumento: variaveis[documento].label,
-          variavel: variavel,
-          nameVariavel: variaveis[documento].options[variavel],
-          valor: inputValue,
-          referencia: referencia,
-          dataDocumento: dataDocumento,
-          areaAnalise: areaAnalise,
-          id: uuid()
-        }
-      ]);
-      setReferencia("");
-      setDataDocumento("");
-      setAreaAnalise("");
-      setDocumento("");
-      setVariavel("");
-      setInputValue("");
-    }
+      if(formulario.length === 0){
+        setFormulario([
+          ...formulario,
+          {
+            documento: documento,
+            nameDocumento: variaveis[documento].label,
+            variavel: variavel,
+            nameVariavel: variaveis[documento].options[variavel],
+            valor: inputValue,
+            referencia: referencia,
+            dataDocumento: dataDocumento,
+            areaAnalise: areaAnalise,
+            id: uuid()
+          }
+        ]);
+      }
+      else{
+        setFormulario([
+          ...formulario,
+          {
+            documento: documento,
+            nameDocumento: variaveis[documento].label,
+            variavel: variavel,
+            nameVariavel: variaveis[documento].options[variavel],
+            valor: inputValue,
+            id: uuid()
+          }
+        ]);
+      }
+        setReferencia("");
+        setDataDocumento("");
+        setAreaAnalise("");
+        setDocumento("");
+        setVariavel("");
+        setInputValue(""); 
+      }
+    
+
   };
 
   const handleSubmit = (event) => {
+    const docs = {};
     event.preventDefault();
     if (formulario.length > 0) {
       // aqui enviar os valores do formulário para o servidor
@@ -224,32 +242,40 @@ function Formulario() {
       if (selectedFile)
         formData.append(selectedFile.name, selectedFile);
 
+      for(let i = 0; i < formulario.length; i+=1){
+        const name = formulario[i].documento;
+        const variable = formulario[i].variavel;
+        const val = formulario[i].valor;
+        if(!(name in docs)){
+          docs[name] = {}
+        }
+        docs[name][variable] = val;
+      }
 
       const jsonList = formulario.map(
         ({
-          documento,
-          variavel,
-          valor,
           areaAnalise,
           dataDocumento,
           referencia,
         }) => ({
-          "documento": variaveis[documento].label,
-          "variavel": variaveis[documento].options[variavel],
-          "valor": valor,
           "areaAnalise": areaAnalise,
           "dataDocumento": dataDocumento,
           "referencia": referencia,
         })
       );
 
+      const json = {...docs, ...jsonList[0]};
+      console.log(JSON.stringify(json));
+
+      // console.log(jsonList);
+
       Object.keys(jsonList).forEach((key) => {
         formData.append(key, jsonList[key]);
       });
 
-      console.log(formData);
+      // console.log(formData);
 
-      axios.post('URL_DA_SUA_API', formData)
+      axios.post('http://localhost:8000/api/form-create/', json)
         .then(response => {
           console.log('Dados enviados com sucesso:', response.data);
         })
@@ -424,9 +450,13 @@ function Formulario() {
 
             <div className="areaAnalise-box">
               <label htmlFor="areaAnalise">Área de análise</label>
-              <select id="areaAnalise">
-                <option value="" disabled selected> </option>
-              </select>
+              <input
+                id={areaAnalise}
+                type="text"
+                value={areaAnalise}
+                onChange={(e) => setAreaAnalise(e.target.value)}
+
+              />
 
               <small >Selecionar uma das opções possíveis</small>
             </div>
