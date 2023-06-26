@@ -1,5 +1,6 @@
 /* eslint-disable object-shorthand */
 /* eslint-disable import/no-extraneous-dependencies */
+/* eslint-disable no-unused-vars */
 /* eslint-disable no-shadow */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 
@@ -17,8 +18,9 @@ function Formulario() {
   const [inputValue, setInputValue] = useState("");
   const [referencia, setReferencia] = useState("");
   const [dataDocumento, setDataDocumento] = useState("");
-  const [areaAnalise, setAreaAnalise] = useState("");
-
+  const codSicar = localStorage.getItem("sicar");
+  const coordinates = localStorage.getItem("coordinates");
+  const [areaAnalise, setAreaAnalise] = useState(coordinates);
   const variaveis = {
     processo_judicial: {
       label: "Processo Judicial",
@@ -223,7 +225,7 @@ function Formulario() {
       }
         setReferencia("");
         setDataDocumento("");
-        setAreaAnalise("");
+      
         setDocumento("");
         setVariavel("");
         setInputValue(""); 
@@ -275,7 +277,7 @@ function Formulario() {
 
       // console.log(formData);
 
-      axios.post('URL_DA_SUA_API', json)
+      axios.post('http://localhost:8000/api/form-create/', json)
         .then(response => {
           console.log('Dados enviados com sucesso:', response.data);
         })
@@ -290,23 +292,18 @@ function Formulario() {
     setDocumento(event.target.value);
     setReferencia("");
     setDataDocumento("");
-    setAreaAnalise("");
     setVariavel("");
     setInputValue("");
   };
 
-  // eslint-disable-next-line no-unused-vars
-  const handleAreaAnalise = (event) => {
-    setAreaAnalise(event.target.value);
-  };
-
+  
 
   return (
     <div className='index'>
 
 
-      <form onSubmit={handleSubmit}>
-        <p id="titulo-formulario">INSERIR DADOS DOCUMENTAIS</p>
+      <form className = "form-formulario" onSubmit={handleSubmit}>
+        <p id="titulo-formulario">INSERIR DADOS DOCUMENTAIS CÓDIGO SICAR: {codSicar}</p>
 
         {formulario.map((input) => (
           <div key={input.id} className="form-box">
@@ -335,7 +332,7 @@ function Formulario() {
               </div>
               <div className="areaAnalise-box">
                 <label>Área de análise</label>
-                <input className="inserted-value" type="text"  id="areaAnalise" value={input.areaAnalise} readOnly />
+                <input className="inserted-value" type="text"  id="areaAnalise" value={coordinates} readOnly />
               </div>
             </div>
           </div>
@@ -450,11 +447,13 @@ function Formulario() {
 
             <div className="areaAnalise-box">
               <label htmlFor="areaAnalise">Área de análise</label>
-              <select id="areaAnalise">
-                <option value="" disabled selected> </option>
-              </select>
+              <input
+                id="areaAnalise"
+                type="text"
+                value={coordinates}
+              />
 
-              <small >Selecionar uma das opções possíveis</small>
+              <small >Coordenadas escolhidas no mapa</small>
             </div>
           </div>
         </div>
@@ -478,7 +477,7 @@ function Formulario() {
         {(formulario.length > 0 &&
           (
             <div className="submit">
-              <button type="submit">Finalizar</button>
+              <button className="button-form" type="submit">Finalizar</button>
             </div>
           )
         )}
