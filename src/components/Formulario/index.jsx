@@ -20,7 +20,8 @@ function Formulario() {
   const [dataDocumento, setDataDocumento] = useState("");
   const codSicar = localStorage.getItem("sicar");
   const coordinates = localStorage.getItem("coordinates");
-  const [areaAnalise, setAreaAnalise] = useState(coordinates);
+  const [addButton, setAddButton] = useState(false);
+  const [areaAnalise, setAreaAnalise] = useState("");
   const variaveis = {
     processo_judicial: {
       label: "Processo Judicial",
@@ -192,9 +193,10 @@ function Formulario() {
   };
 
   const handleAddInput = (event) => {
+    setAddButton(true);
     event.preventDefault();
     if (documento && variavel && inputValue) {
-      if(formulario.length === 0){
+      if (formulario.length === 0) {
         setFormulario([
           ...formulario,
           {
@@ -210,7 +212,7 @@ function Formulario() {
           }
         ]);
       }
-      else{
+      else {
         setFormulario([
           ...formulario,
           {
@@ -223,14 +225,15 @@ function Formulario() {
           }
         ]);
       }
-        setReferencia("");
-        setDataDocumento("");
-      
-        setDocumento("");
-        setVariavel("");
-        setInputValue(""); 
-      }
-    
+      setReferencia("");
+      setDataDocumento("");
+      setAreaAnalise("");
+      setDocumento("");
+      setVariavel("");
+      setInputValue("");
+      setAddButton(false);
+    }
+
 
   };
 
@@ -244,11 +247,11 @@ function Formulario() {
       if (selectedFile)
         formData.append(selectedFile.name, selectedFile);
 
-      for(let i = 0; i < formulario.length; i+=1){
+      for (let i = 0; i < formulario.length; i += 1) {
         const name = formulario[i].documento;
         const variable = formulario[i].variavel;
         const val = formulario[i].valor;
-        if(!(name in docs)){
+        if (!(name in docs)) {
           docs[name] = {}
         }
         docs[name][variable] = val;
@@ -266,7 +269,7 @@ function Formulario() {
         })
       );
 
-      const json = {...docs, ...jsonList[0]};
+      const json = { ...docs, ...jsonList[0] };
       console.log(JSON.stringify(json));
 
       // console.log(jsonList);
@@ -291,18 +294,19 @@ function Formulario() {
   const handleDocumentoChange = (event) => {
     setDocumento(event.target.value);
     setReferencia("");
+    setAreaAnalise("");
     setDataDocumento("");
     setVariavel("");
     setInputValue("");
   };
 
-  
+
 
   return (
     <div className='index'>
 
 
-      <form className = "form-formulario" onSubmit={handleSubmit}>
+      <form className="form-formulario" onSubmit={handleSubmit}>
         <p id="titulo-formulario">INSERIR DADOS DOCUMENTAIS CÓDIGO SICAR: {codSicar}</p>
 
         {formulario.map((input) => (
@@ -328,11 +332,11 @@ function Formulario() {
               </div>
               <div className="data-box">
                 <label>Data do documento</label>
-                <input className="inserted-value"  type="text" value={input.name} readOnly />
+                <input className="inserted-value" type="text" value={input.name} readOnly />
               </div>
               <div className="areaAnalise-box">
                 <label>Área de análise</label>
-                <input className="inserted-value" type="text"  id="areaAnalise" value={coordinates} readOnly />
+                <input className="inserted-value" type="text" id="areaAnalise" value={input.areaAnalise} readOnly />
               </div>
             </div>
           </div>
@@ -450,21 +454,23 @@ function Formulario() {
               <input
                 id="areaAnalise"
                 type="text"
-                value={coordinates}
+                value={areaAnalise}
+                onChange={(e) => setAreaAnalise(e.target.value)}
               />
 
-              <small >Coordenadas escolhidas no mapa</small>
+              <small >Área que deseja inserir os documentos</small>
             </div>
           </div>
         </div>
-
         <div className="novo-dado">
-          <button type="button" onClick={handleAddInput}>
-            <figure id="image-novo-dado" alt="icone de soma" />
-          </button>
-          <p>Inserir outro dado</p>
+          <div className="novo-dado-box">
+            <button type="button" onClick={handleAddInput}>
+              <figure id="image-novo-dado" alt="icone de soma" />
+            </button>
+            <p>Inserir outro dado</p></div>
+          { addButton === true && (<p id="disclaim-button">Para inserir outro dado preencha todos os campos</p>
+          )}
         </div>
-
         <div className="novo-file">
           <label htmlFor="input-file" onChange={(e) => setSelectedFile(e.target.files[0])}>
             <figure id="image-novo-file" alt="icone de anexo" />

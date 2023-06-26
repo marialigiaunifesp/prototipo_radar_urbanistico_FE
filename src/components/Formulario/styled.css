@@ -94,13 +94,22 @@ small {
     margin-top: 2px;
 }
 
-.novo-dado,
-.novo-file {
+.novo-file,.novo-dado {
     display: flex;
     align-items: center;
     justify-content: center;
     background-color: #EBE3E3;
     border: 3px solid #fff;
+}
+.novo-dado{
+    
+    flex-direction: column;
+}
+
+.novo-dado-box{
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .novo-file label {
@@ -170,10 +179,14 @@ small {
     padding: 25px 25px 25px 25px;
 }
 
-.inserted-value, .areaAnalise-box input {
+.inserted-value {
     color: grey;
 }
-
+#disclaim-button{
+    font-style: italic;
+    color: #cc5858;
+    font-size: 0.95rem;
+}
 @media (max-width: 1100px) {
 
    
