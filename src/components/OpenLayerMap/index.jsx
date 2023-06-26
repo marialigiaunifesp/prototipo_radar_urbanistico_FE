@@ -1,153 +1,142 @@
-import React, { useEffect, useRef } from 'react';
+/* eslint-disable no-unused-vars */
+/* eslint-disable no-underscore-dangle */
+/* eslint-disable jsx-a11y/anchor-is-valid */
+import React, { useEffect, useRef, useState } from 'react';
 import 'ol/ol.css';
+import Overlay from 'ol/Overlay';
 import { Map, View } from 'ol';
 import { Tile as TileLayer, Vector as VectorLayer } from 'ol/layer';
 import { OSM, Vector as VectorSource } from 'ol/source';
-// import { Draw, Modify, Snap } from 'ol/interaction';
 import { fromLonLat } from 'ol/proj';
 import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
-// import axios from 'axios';
 import GeoJSON from 'ol/format/GeoJSON';
 import Select from 'ol/interaction/Select';
-
-import MapContainer from './styled';
+import './styled.css';
 
 function OpenLayerMap() {
   const mapRef = useRef(null);
-  const drawSourceRef = useRef(null);
-  const modeRef = useRef('Point');
+  const containerRef = useRef(null);
+  const [content, setContent] = useState('');
 
-  const osmLayer = new TileLayer({
-          source: new OSM(),
-        });
-  const mainLayers = [osmLayer];
-  const mainView = new View({
-        center: fromLonLat([-45.9741, -23.3066]),
-        zoom: 12
-      });
-  const select = new Select();
+  const closerRef = useRef(null);
+  const drawSourceRef = useRef(null);
+  const [mode, setMode] = useState('Point');
+  const selectRef = useRef(new Select());
+  const overlayRef = useRef(null);
+
+  const sendToForm = () => {
+    const url = "form?id=";
+    window.open(url);
+  }
+
+  const handleMapClick = () => {
+    const selectInstance = selectRef.current;
+
+    setTimeout(() => {
+      const features = selectInstance.getFeatures();
+      if (features) {
+
+        const attrs = features.item(0);
+
+        if (attrs) {
+          const text = ['SICAR:  ', attrs.get('COD_IMOVEL')].join('');
+
+          setContent(text);  // Atualizando o estado com o novo conteúdo
+          overlayRef.current.setPosition(attrs.getGeometry().getCoordinates());
+        }
+      }
+    }, 500);
+  }
+
+  const handleCloseClick = () => {
+    if (overlayRef.current) {
+      overlayRef.current.setPosition(undefined);
+    }
+    closerRef.current.blur();
+    return false;
+  };
 
   useEffect(() => {
-    const map = new Map({
-      layers: mainLayers,
-      target: mapRef.current,
-      view: mainView
+    const osmLayer = new TileLayer({
+      source: new OSM(),
     });
+
+    const mainView = new View({
+      center: fromLonLat([-45.9741, -23.3066]),
+      zoom: 12
+    });
+
+    const overlay = new Overlay({
+      element: containerRef.current,
+      autoPan: {
+        animation: {
+          duration: 250,
+        },
+      },
+    });
+    overlayRef.current = overlay;
+
+    const map = new Map({
+      layers: [osmLayer],
+      target: mapRef.current,
+      view: mainView,
+      overlays: [overlay],
+    });
+
     const drawSource = new VectorSource({
-      // format: new GeoJSON().readFeatures(data),
       format: new GeoJSON(),
       url: './sicar_area_imovel.geojson',
     });
+
     const drawLayer = new VectorLayer({
       source: drawSource
     });
 
     map.addLayer(drawLayer);
+    map.addInteraction(selectRef.current);
+    map.on('click', handleMapClick);
 
-    // Remover as interações antigas
-    // map.getInteractions().clear();
-    map.addInteraction(select);
-
-    // Adicionar as novas interações com base no valor atual do modeRef
-    /* 
-    if (modeRef.current === 'Point') {
-      map.addInteraction(new Draw({ source: drawSource, type: 'Point' }));
-    } else if (modeRef.current === 'Polygon') {
-      map.addInteraction(new Draw({ source: drawSource, type: 'Polygon' }));
-    }
-
-    map.addInteraction(new Modify({ source: drawSource }));
-    map.addInteraction(new Snap({ source: drawSource }));
-    */
     drawSourceRef.current = drawSource;
+    /**
+     * Create an overlay to anchor the popup to the map.
+     */
+
     return () => {
       map.setTarget(null);
+      map.un('click', handleMapClick);
+
     };
-  }, [mapRef]);
-
-  const sendToForm = () => {
-      // Aqui você pode obter os dados da feição selecionada, como ID ou outros atributos relevantes
-  // var feicaoId = feature.getId();
-
-  // Abra uma nova janela para edição dos dados
-  const url = "form?id=";
-
-  window.open(url);
-  }
-
-  select.on('select', ()=>{
-    const popup = window.open("", "Pop-up", "width=400,height=300");
-    const attrs = select.getFeatures().item(0);
-    console.log(attrs.get('COD_IMOVEL'));
-    const text = ['SICAR:  ', attrs.get('COD_IMOVEL')].join('');
-    popup.document.write(text);
-
-
-
-    const botao = popup.document.createElement("button");
-    botao.innerHTML = "Editar Dados";
-    botao.addEventListener("click", () => {
-      sendToForm(text);
-    });
-    popup.document.body.appendChild(botao);
-    
-  });
+  }, []);
 
   const handleModeChange = (newMode) => {
-    if (newMode !== modeRef.current) {
-      modeRef.current = newMode;
-    }
+    setMode(newMode);
   };
 
-  
-  /*
-  const enviarParaAPI = () => {
-    const features = drawSourceRef.current.getFeatures();
-    const coord = features[0].getGeometry().getCoordinates();
-    console.log(coord);
-    const geojson = {
-      type: "FeatureCollection",
-      features: [{
-        type: "Feature",
-        properties: {},
-        geometry: {
-        coordinates: [
-          coord[0],
-          coord[1]
-          ],
-        type: "Point"
-      }}]};
-      
-    // Envie as features para a API aqui (Enviando coordenadas do primeiro ponto)
-    axios.post('http://localhost:8000/api/coordinate-create/', geojson)
-      .then(response => response.json())
-      .then(data => {
-        console.log('Dados salvos com sucesso:', data);
-      })
-      .catch(error => {
-        console.error('Erro ao salvar os dados:', error.message);
-      });
-      
-  };
-  */
   return (
-    <Grid container spacing={2}>
-
-      <Grid item>
-        <Button variant="contained" color='secondary'
-          onClick={() => handleModeChange('Point')}>Ponto</Button>
+    <div>
+      <Grid container spacing={2}>
+        <Grid item>
+          <Button variant="contained" color='secondary'
+            onClick={() => handleModeChange('Point')}>Ponto</Button>
+        </Grid>
+        <Grid item>
+          <Button variant="contained" color='secondary'
+            onClick={() => handleModeChange('Polygon')}>Polígono</Button>
+        </Grid>
       </Grid>
-      <Grid item>
-        <Button  variant="contained" color='secondary'
-        onClick={() => handleModeChange('Polygon')}>Polígono</Button>
-      </Grid>
-      <Grid item>
-        <Button variant="contained" color='secondary'
-          onClick={sendToForm}>Editar</Button>
-      </Grid>
-      <MapContainer ref={mapRef}/>
-    </Grid>
+      <div className="box-map">
+        <div className="map" ref={mapRef} />
+        <div id="popup" className="ol-popup" ref={containerRef}>
+          <a href="#" id="popup-closer" className="ol-popup-closer" ref={closerRef} onClick={handleCloseClick}> </a>
+          <div id="popup-content"> {content} </div>
+          {content && (<div className='send-form'>
+            <Button variant="contained" color='secondary'
+              onClick={sendToForm}>Editar</Button>
+          </div>)}
+        </div>
+      </div>
+    </div>
   );
 };
 
