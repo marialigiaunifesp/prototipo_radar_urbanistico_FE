@@ -6,6 +6,10 @@ p {
     margin: 0;
 }
 
+button {
+    
+  cursor: pointer;
+}
 #titulo-formulario {
     margin: 10px 0 10px 22px;
 }
@@ -150,7 +154,13 @@ small {
 
 .submit {
     padding: 5px;
-    margin: 5px auto;
+}
+#disclaim-button-finalizar{
+    float: right;
+    
+    font-style: italic;
+    color: #cc5858;
+    font-size: 0.95rem;
 }
 
 .button-form {
@@ -159,10 +169,6 @@ small {
     background: #E50F0F;
     border: 3px solid #FFF6F1;
     border-radius: 10px;
-    display: flex;
-    margin-left: auto;
-    justify-content: center;
-    align-items: center;
 }
 
 #titulo-janela-avisos {
@@ -186,6 +192,12 @@ small {
     font-style: italic;
     color: #cc5858;
     font-size: 0.95rem;
+}
+.buttons{
+    width: 100%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: flex-end;
 }
 @media (max-width: 1100px) {
 

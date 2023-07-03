@@ -39,7 +39,7 @@ export function AuthProvider({ children }) {
             // setando header padrão nas requisições, enviando o token em todas as requisições
             api.defaults.headers.Authorization = `Bearer ${token}`;
             setInvalidUser(false);
-            setUser(loggedUser)
+            setUser(loggedUser);
             navigate("/map");
         }
         else{

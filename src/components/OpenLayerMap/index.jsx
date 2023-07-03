@@ -39,7 +39,7 @@ function OpenLayerMap() {
     navigate("/formulario");
   }
 
-  const handleMapClick = () => {
+  const handleMapClick = (e) => {
     const selectInstance = selectRef.current;
 
     setTimeout(() => {
@@ -53,7 +53,7 @@ function OpenLayerMap() {
           setSicarNumber(attrs.get('COD_IMOVEL'));
           setCoordinates(attrs.getGeometry().getCoordinates());  // Atualizando o estado com o novo conteúdo
           setContent(text);  // Atualizando o estado com o novo conteúdo
-          overlayRef.current.setPosition(coordinates);
+          overlayRef.current.setPosition(e.coordinate);
         }
       }
     }, 500);
@@ -105,7 +105,7 @@ function OpenLayerMap() {
 
     map.addLayer(drawLayer);
     map.addInteraction(selectRef.current);
-    map.on('click', handleMapClick);
+    map.on('click',  e => handleMapClick(e));
 
     drawSourceRef.current = drawSource;
     /**

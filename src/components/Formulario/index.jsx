@@ -9,6 +9,7 @@ import React, { useState } from "react";
 import axios from 'axios';
 import './styled.css'
 import { v4 as uuid } from 'uuid';
+import { useNavigate } from "react-router-dom";
 
 function Formulario() {
   const [formulario, setFormulario] = useState([]);
@@ -22,6 +23,9 @@ function Formulario() {
   const coordinates = localStorage.getItem("coordinates");
   const [addButton, setAddButton] = useState(false);
   const [areaAnalise, setAreaAnalise] = useState("");
+  const [submitButton, setSubmitButton] = useState(false);
+
+  const navigate = useNavigate();
   const variaveis = {
     processo_judicial: {
       label: "Processo Judicial",
@@ -194,6 +198,7 @@ function Formulario() {
 
   const handleAddInput = (event) => {
     setAddButton(true);
+    setSubmitButton(false);
     event.preventDefault();
     if (documento && variavel && inputValue) {
       if (formulario.length === 0) {
@@ -233,14 +238,16 @@ function Formulario() {
       setInputValue("");
       setAddButton(false);
     }
-
-
   };
+  const handleCancelar = () => {
+    navigate("/map");
+  }
 
   const handleSubmit = (event) => {
     const docs = {};
     event.preventDefault();
-    if (formulario.length > 0) {
+    if (documento !== "" && variavel !== "" && inputValue !== "" && areaAnalise !== "") {
+      setSubmitButton(true);
       // aqui enviar os valores do formulário para o servidor
       const formData = new FormData();
 
@@ -283,6 +290,7 @@ function Formulario() {
       axios.post('http://localhost:8000/api/form-create/', json)
         .then(response => {
           console.log('Dados enviados com sucesso:', response.data);
+          navigate("/map");
         })
         .catch(error => {
           console.error('Erro ao enviar os dados:', error.message);
@@ -468,7 +476,7 @@ function Formulario() {
               <figure id="image-novo-dado" alt="icone de soma" />
             </button>
             <p>Inserir outro dado</p></div>
-          { addButton === true && (<p id="disclaim-button">Para inserir outro dado preencha todos os campos</p>
+          {addButton === true && (<p id="disclaim-button">Para inserir outro dado preencha todos os campos</p>
           )}
         </div>
         <div className="novo-file">
@@ -480,13 +488,19 @@ function Formulario() {
 
         </div>
 
-        {(formulario.length > 0 &&
-          (
-            <div className="submit">
-              <button className="button-form" type="submit">Finalizar</button>
-            </div>
-          )
-        )}
+        <div className="buttons">
+          <div className="submit">
+            <button className="button-form" type="submit">Finalizar</button>
+
+          </div>
+
+          <div className="cancelar">
+            <button className="button-form" type="button" onClick={handleCancelar}>Cancelar</button>
+          </div>
+
+        </div>
+        {(!submitButton) && (
+          <p id="disclaim-button-finalizar">Para finalizar preencha todos os campos</p>)}
       </form >
 
       <div className="janela-avisos">
