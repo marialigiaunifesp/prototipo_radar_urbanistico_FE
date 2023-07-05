@@ -22,6 +22,7 @@ function OpenLayerMap() {
   const [content, setContent] = useState('');
   const [sicarNumber, setSicarNumber] = useState('');
   const [coordinates, setCoordinates] = useState([]);
+  const [idSicar, setIdSicar] = useState(''); 
   const navigate = useNavigate();
   const { sicar } = useContext(AuthContext);
 
@@ -35,6 +36,7 @@ function OpenLayerMap() {
     
     localStorage.setItem("sicar", sicarNumber);
     localStorage.setItem("coordinates", coordinates);
+    localStorage.setItem("idSicar", idSicar); 
 
     navigate("/formulario");
   }
@@ -49,8 +51,9 @@ function OpenLayerMap() {
         const attrs = features.item(0);
 
         if (attrs) {
-          const text = ['SICAR:  ', attrs.get('COD_IMOVEL')].join('');
-          setSicarNumber(attrs.get('COD_IMOVEL'));
+          const text = ['SICAR:  ', attrs.get('cod_imovel')].join('');
+          setIdSicar(attrs.getId()); 
+          setSicarNumber(attrs.get('cod_imovel'));
           setCoordinates(attrs.getGeometry().getCoordinates());  // Atualizando o estado com o novo conteúdo
           setContent(text);  // Atualizando o estado com o novo conteúdo
           overlayRef.current.setPosition(e.coordinate);
@@ -96,7 +99,8 @@ function OpenLayerMap() {
 
     const drawSource = new VectorSource({
       format: new GeoJSON(),
-      url: './sicar_area_imovel.geojson',
+      // url: './sicar_area_imovel.geojson',
+      url: 'http://localhost:8000/api/get-sicar/', 
     });
 
     const drawLayer = new VectorLayer({

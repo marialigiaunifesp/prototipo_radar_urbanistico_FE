@@ -5,7 +5,7 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 
 
-import React, { useState } from "react";
+import React, { useState, useRef} from "react";
 import axios from 'axios';
 import './styled.css'
 import { v4 as uuid } from 'uuid';
@@ -21,9 +21,13 @@ function Formulario() {
   const [dataDocumento, setDataDocumento] = useState("");
   const codSicar = localStorage.getItem("sicar");
   const coordinates = localStorage.getItem("coordinates");
+  const idSicar = localStorage.getItem("idSicar");
+
   const [addButton, setAddButton] = useState(false);
   const [areaAnalise, setAreaAnalise] = useState("");
   const [submitButton, setSubmitButton] = useState(false);
+  const form = useRef(formulario);
+
 
   const navigate = useNavigate();
   const variaveis = {
@@ -245,26 +249,54 @@ function Formulario() {
 
   const handleSubmit = (event) => {
     const docs = {};
+    const config = { headers: { 'content-type': 'multipart/form-data' } };  // Settings do formData
     event.preventDefault();
+
     if (documento !== "" && variavel !== "" && inputValue !== "" && areaAnalise !== "") {
       setSubmitButton(true);
-      // aqui enviar os valores do formulário para o servidor
+      
+  
+      if (formulario.length === 0) {
+        const firstForm = [
+          {
+            documento: documento,
+            nameDocumento: variaveis[documento].label,
+            variavel: variavel,
+            nameVariavel: variaveis[documento].options[variavel],
+            valor: inputValue,
+            referencia: referencia,
+            dataDocumento: dataDocumento,
+            areaAnalise: areaAnalise,
+            id: uuid()
+          }
+        ];
+        form.current = firstForm;
+      }
+      else{
+        form.current = formulario;
+      }
+
       const formData = new FormData();
+      formData.append('arquivo', selectedFile);
 
-      if (selectedFile)
-        formData.append(selectedFile.name, selectedFile);
-
-      for (let i = 0; i < formulario.length; i += 1) {
-        const name = formulario[i].documento;
-        const variable = formulario[i].variavel;
-        const val = formulario[i].valor;
+      // Union of forms
+      for (let i = 0; i < form.current.length; i += 1) {
+        const name = form.current[i].documento;
+        const variable = form.current[i].variavel;
+        const val = form.current[i].valor;
         if (!(name in docs)) {
           docs[name] = {}
         }
         docs[name][variable] = val;
       }
 
-      const jsonList = formulario.map(
+      // Info from map
+      const areaInfo = {
+        // "COD_IMOVEL": codSicar
+        "id_sicar": idSicar
+      };
+
+      const jsonList = form.current.map(
         ({
           areaAnalise,
           dataDocumento,
@@ -275,18 +307,26 @@ function Formulario() {
           "referencia": referencia,
         })
       );
+      const json = { ...areaInfo, ...docs, ...jsonList[0] };
+      console.log(json);
 
-      const json = { ...docs, ...jsonList[0] };
-      console.log(JSON.stringify(json));
-
-      // console.log(jsonList);
-
+      /*
+      Sending all files via formdata
       Object.keys(jsonList).forEach((key) => {
         formData.append(key, jsonList[key]);
       });
+      */
 
-      // console.log(formData);
-
+      console.log(formData);
+      
+      // Envia formData
+      axios.post("http://localhost:8000/api/form-create-file/", formData, config)
+      .then((res)=>{
+        alert("File upload success");
+      })
+      .catch((err) => alert("File Upload Error"));
+      
+      // Envia json
       axios.post('http://localhost:8000/api/form-create/', json)
         .then(response => {
           console.log('Dados enviados com sucesso:', response.data);
@@ -295,7 +335,6 @@ function Formulario() {
         .catch(error => {
           console.error('Erro ao enviar os dados:', error.message);
         });
-
     }
   };
 
@@ -480,8 +519,9 @@ function Formulario() {
           )}
         </div>
         <div className="novo-file">
-          <label htmlFor="input-file" onChange={(e) => setSelectedFile(e.target.files[0])}>
+          <label htmlFor="input-file">
             <figure id="image-novo-file" alt="icone de anexo" />
+            <input name = "arquivo" id = "input-file" type="file" onChange={(e) => { console.log("Evento onChange acionado");setSelectedFile(e.target.files[0]);}} /> 
           </label>
           <input type="file" id="input-file" />
           <p> Anexar Arquivo</p>
