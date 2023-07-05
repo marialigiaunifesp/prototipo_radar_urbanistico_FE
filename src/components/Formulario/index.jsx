@@ -247,7 +247,7 @@ function Formulario() {
     navigate("/map");
   }
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async(event) => {
     const docs = {};
     const config = { headers: { 'content-type': 'multipart/form-data' } };  // Settings do formData
     event.preventDefault();
@@ -318,24 +318,30 @@ function Formulario() {
       */
 
       console.log(formData);
-      
-      // Envia formData
-      axios.post("http://localhost:8000/api/form-create-file/", formData, config)
-      .then((res)=>{
-        alert("File upload success");
-      })
-      .catch((err) => alert("File Upload Error"));
-      
-      // Envia json
+
+      // Envia json e arquivo
       axios.post('http://localhost:8000/api/form-create/', json)
         .then(response => {
-          console.log('Dados enviados com sucesso:', response.data);
-          navigate("/map");
+          if(formData.length > 0){
+            axios.post("http://localhost:8000/api/form-create-file/", formData, config)
+            .then((res)=>{
+              alert("Dados enviados com sucesso")
+              console.log('Dados enviados com sucesso:', response.data);
+              navigate("/map");
+            })
+            .catch((err) => console.log("File Upload Error"));
+          }
+          else{
+            alert("Dados enviados com sucesso")
+            navigate("/map");
+          }
         })
         .catch(error => {
+          alert('Erro ao enviar os dados');
           console.error('Erro ao enviar os dados:', error.message);
         });
     }
+
   };
 
   const handleDocumentoChange = (event) => {
