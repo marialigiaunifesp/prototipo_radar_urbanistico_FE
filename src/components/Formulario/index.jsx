@@ -43,9 +43,9 @@ function Formulario() {
         cpf_requerente: "CPF da parte Requerente",
         numero_carta: "Nº da Carta Precatório na Origem",
         nomde_advogado: "Nome do Advogado",
-        OAB: "OAB",
+        oab: "OAB",
         documento_delegacia: "Nº do Documento na Delegacia",
-        CDA: "CDA",
+        cda: "CDA",
         classe: "Classe",
         area: "Área",
         assunto: "Assunto",
@@ -71,14 +71,14 @@ function Formulario() {
         bairro: "Bairro",
         regiao: "Regiao",
         denominacao_imovel: "Denominação do Imóvel",
-        codigo_INCRA: "Código INCRA",
-        SICAR: "SICAR",
-        SICAR_SP: "SICAR-SP",
+        codigo_incra: "Código INCRA",
+        sicar: "SICAR",
+        sicar_sp: "SICAR-SP",
         proprietario: "Proprietário",
         vendedor: "Vendedor",
         forma_aquisicao: "Forma de Aquisição",
         data_transacao: "Data do registro da Transação",
-        CCIR: "CCIR",
+        ccir: "CCIR",
       },
     },
     oficio: {
@@ -101,9 +101,9 @@ function Formulario() {
       options: {
         cpf_proprietario: "CPF do Proprietário",
         area_imovel: "Área do Imóvel",
-        CCIR: "CCIR",
+        ccir: "CCIR",
         unidade: "Unidade",
-        CNPJ: "CNPJ",
+        cnpj: "CNPJ",
         telefone_contato: "Telefone de Contato",
         email_contato: "E-mail de Contato",
         possui_planta_parcelamento: "Possui Planta de Parcelamento",
@@ -152,7 +152,7 @@ function Formulario() {
         data_publicacao_notificacao:
           "Data de publicação da notificação em boletim oficial (quando houver)",
         recurso_notificacao: "Recurso de Notificação",
-        processo_REURB: "Processo de REURB (mestre)",
+        processo_reurb: "Processo de REURB (mestre)",
       },
     },
     boletim_oficial: {
@@ -179,7 +179,7 @@ function Formulario() {
         AIA: "Auto de Infração Ambiental (AIA)",
       },
     },
-    IBGE: {
+    ibge: {
       label: "IBGE",
       options: {
         aglomerado_subnormal: "Aglomerado subnormal",
