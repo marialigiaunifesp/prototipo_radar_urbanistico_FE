@@ -277,7 +277,9 @@ function Formulario() {
       }
 
       const formData = new FormData();
-      formData.append('arquivo', selectedFile);
+      if(selectedFile)
+        formData.append('arquivo', selectedFile);
+      console.log(formData);
 
       // Union of forms
       for (let i = 0; i < form.current.length; i += 1) {
@@ -317,13 +319,13 @@ function Formulario() {
       });
       */
 
-      console.log(formData);
-
       // Envia json e arquivo
       axios.post('http://localhost:8000/api/form-create/', json)
         .then(response => {
-          if(formData.length > 0){
-            axios.post("http://localhost:8000/api/form-create-file/", formData, config)
+          // Verifica se o Form Data não é nulo
+          if(formData.entries().next().value){
+            formData.append('id_documento', response.data);
+            axios.post("http://localhost:8000/api/form-post-file/", formData, config)
             .then((res)=>{
               alert("Dados enviados com sucesso")
               console.log('Dados enviados com sucesso:', response.data);
@@ -527,7 +529,7 @@ function Formulario() {
         <div className="novo-file">
           <label htmlFor="input-file">
             <figure id="image-novo-file" alt="icone de anexo" />
-            <input name = "arquivo" id = "input-file" type="file" onChange={(e) => { console.log("Evento onChange acionado");setSelectedFile(e.target.files[0]);}} /> 
+            <input name = "arquivo" id = "input-file" type="file" onChange={(e) => {setSelectedFile(e.target.files[0]);}} /> 
           </label>
           <input type="file" id="input-file" />
           <p> Anexar Arquivo</p>
