@@ -32,7 +32,7 @@ function Login() {
         <form className="form-login" onSubmit={handleSubmit}>
           <Title>Login</Title>
           <div className="input-login">
-            <label htmlFor="usuario">E-mail</label>
+            <label htmlFor="usuario">Usuário</label>
             <input
               id="usuario" className="input-login" label="Usuário"
               type="text" name="username" required
