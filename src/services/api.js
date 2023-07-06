@@ -11,15 +11,14 @@ export const api = axios.create({
 
 export const createSession = async (username, password) => {
   const data = {"username":username, "password" : password};
-  const url = 'http://localhost:8000/token/';
+  // const url = 'https://ru-be-prototype.onrender.com/api/token/';
+  const url = 'http://localhost:8000/api/token/';
   try {
     // const response = await api.post('/sessions', { username, password });
-    const res = await axios.post(url ,data);
-    res.username = username;
-
-    return res;
+    const response = await axios.post(url ,data);
+    return response;
   } catch (error) {
-    if (error.response && error.response.status === 401) {
+    if (error.response && error.response.status === 401 && error.response.status === 205) {
       console.log('Credenciais inválidas. O usuário não pode entrar.');
       return error.response.status;
     } else 

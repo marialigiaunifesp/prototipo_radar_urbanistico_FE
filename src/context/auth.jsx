@@ -29,12 +29,10 @@ export function AuthProvider({ children }) {
         // conexão com a api para confirmação de token
         const response = await createSession(username, password);
         if (response.status === 200){
-            const loggedUser = response.username;
-            const token = response.data.access;
+            const loggedUser = response.data.login;
+            const token = response.data.token;
             localStorage.setItem("token", token);
             localStorage.setItem("user", loggedUser);
-            console.log(token);
-            console.log(loggedUser);
 
             // setando header padrão nas requisições, enviando o token em todas as requisições
             // api.defaults.headers.Authorization = `Bearer ${token}`;
