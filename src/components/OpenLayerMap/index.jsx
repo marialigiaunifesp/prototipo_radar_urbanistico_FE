@@ -4,6 +4,7 @@
 import React, { useEffect, useRef, useState, useContext } from 'react';
 import 'ol/ol.css';
 import Overlay from 'ol/Overlay';
+import axios from 'axios';
 import { Map, View } from 'ol';
 import { Tile as TileLayer, Vector as VectorLayer } from 'ol/layer';
 import { OSM, Vector as VectorSource } from 'ol/source';
@@ -47,11 +48,18 @@ function OpenLayerMap() {
     setTimeout(() => {
       const features = selectInstance.getFeatures();
       if (features) {
-
         const attrs = features.item(0);
 
         if (attrs) {
           const text = ['SICAR:  ', attrs.get('cod_imovel')].join('');
+          axios.get('http://localhost:8000/api/form-get-info-api/')
+          .then((response)=>{
+           //
+    
+          })
+          .catch((err)=>{
+           console.log("not found");
+          })
           setIdSicar(attrs.getId()); 
           setSicarNumber(attrs.get('cod_imovel'));
           setCoordinates(attrs.getGeometry().getCoordinates());  // Atualizando o estado com o novo conteúdo
