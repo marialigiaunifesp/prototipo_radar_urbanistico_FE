@@ -1,3 +1,4 @@
+/*
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
@@ -38,3 +39,4 @@ app.post('/sessions', (req, res) => {
 app.listen(port, () => {
     console.log(`Servidor escutando em http://localhost:${port}`);
 });
+*/

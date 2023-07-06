@@ -1,6 +1,6 @@
 import React, { useState, useEffect, createContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { api, createSession } from "../services/api";
+import { createSession } from "../services/api";
 
 export const AuthContext = createContext();
 
@@ -28,22 +28,22 @@ export function AuthProvider({ children }) {
 
         // conexão com a api para confirmação de token
         const response = await createSession(username, password);
-        
         if (response.status === 200){
-            const loggedUser = response.data.username;
-            const token = response.data.token;
-
+            const loggedUser = response.username;
+            const token = response.data.access;
             localStorage.setItem("token", token);
             localStorage.setItem("user", loggedUser);
-        
+            console.log(token);
+            console.log(loggedUser);
+
             // setando header padrão nas requisições, enviando o token em todas as requisições
-            api.defaults.headers.Authorization = `Bearer ${token}`;
+            // api.defaults.headers.Authorization = `Bearer ${token}`;
             setInvalidUser(false);
             setUser(loggedUser);
             navigate("/map");
         }
         else{
-           
+            console.log('else');
             setInvalidUser(true);
             navigate("/");
         }
@@ -52,7 +52,7 @@ export function AuthProvider({ children }) {
         console.log("logout");
         localStorage.removeItem("user");
         localStorage.removeItem("token");
-        api.defaults.headers.Authorization = null;
+        // api.defaults.headers.Authorization = null;
         
         setUser(null);
         navigate("/");
