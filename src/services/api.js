@@ -11,8 +11,8 @@ export const api = axios.create({
 
 export const createSession = async (username, password) => {
   const data = {"username":username, "password" : password};
-  // const url = 'https://ru-be-prototype.onrender.com/api/token/';
-  const url = 'http://localhost:8000/api/token/';
+  const url = 'https://ru-be-prototype.onrender.com/api/token/';
+  // const url = 'http://localhost:8000/api/token/';
   try {
     // const response = await api.post('/sessions', { username, password });
     const response = await axios.post(url ,data);
