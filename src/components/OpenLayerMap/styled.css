@@ -61,3 +61,9 @@
   left: 350px;
   
 }
+
+.popup-form-container {
+  overflow-x: auto;
+  max-height: 200px; /* Define a altura máxima do container se necessário */
+}
+
