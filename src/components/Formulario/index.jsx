@@ -320,7 +320,7 @@ function Formulario() {
       */
       // const urlForm = 'http://localhost:8000/api/form-create/';
       // const urlFile = 'http://localhost:8000/api/form-post-file/';
-      const urlForm = 'https://ru-be-prototype.onrender.com/api/form-post-file/';
+      const urlForm = 'https://ru-be-prototype.onrender.com/api/form-create/';
       const urlFile = 'https://ru-be-prototype.onrender.com/api/form-post-file/';
       // Envia json e arquivo
       axios.post(urlForm, json)
