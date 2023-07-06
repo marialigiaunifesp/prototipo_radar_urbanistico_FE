@@ -54,11 +54,15 @@ function OpenLayerMap() {
 
         if (attrs) {
           const text = ['SICAR:  ', attrs.get('cod_imovel')].join('');
-          axios.get('http://localhost:8000/api/form-get-info-api/')
+          // const staticUrl = 'http://localhost:8000/api/form-get-info-api/';
+          const staticUrl = 'https://ru-be-prototype.onrender.com/api/form-get-info-api/';
+
+          axios.get([staticUrl, attrs.getId()].join(''))
             .then((response) => {
               setFormulario(response.data);
             })
             .catch((err) => {
+              setFormulario([]);
               console.log("not found");
             })
           setIdSicar(attrs.getId());
@@ -109,7 +113,8 @@ function OpenLayerMap() {
     const drawSource = new VectorSource({
       format: new GeoJSON(),
       // url: './sicar_area_imovel.geojson',
-      url: 'http://localhost:8000/api/get-sicar/', 
+      // url: 'http://localhost:8000/api/get-sicar/', 
+      url: 'https://ru-be-prototype.onrender.com/api/get-sicar/',
     });
 
     const drawLayer = new VectorLayer({
@@ -145,6 +150,8 @@ function OpenLayerMap() {
         return renderizarCamposNaoNulos(valor);
       }
       if (valor !== null) {
+        if(chave.startsWith('id'))
+          return null;
         return <p key={chave}>{chave}: {valor}</p>;
       }
       return null;

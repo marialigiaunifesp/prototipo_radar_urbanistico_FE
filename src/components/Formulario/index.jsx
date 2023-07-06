@@ -318,14 +318,17 @@ function Formulario() {
         formData.append(key, jsonList[key]);
       });
       */
-
+      // const urlForm = 'http://localhost:8000/api/form-create/';
+      // const urlFile = 'http://localhost:8000/api/form-post-file/';
+      const urlForm = 'https://ru-be-prototype.onrender.com/api/form-post-file/';
+      const urlFile = 'https://ru-be-prototype.onrender.com/api/form-post-file/';
       // Envia json e arquivo
-      axios.post('http://localhost:8000/api/form-create/', json)
+      axios.post(urlForm, json)
         .then(response => {
           // Verifica se o Form Data não é nulo
           if(formData.entries().next().value){
             formData.append('id_documento', response.data);
-            axios.post("http://localhost:8000/api/form-post-file/", formData, config)
+            axios.post(urlFile, formData, config)
             .then((res)=>{
               alert("Dados enviados com sucesso")
               console.log('Dados enviados com sucesso:', response.data);
