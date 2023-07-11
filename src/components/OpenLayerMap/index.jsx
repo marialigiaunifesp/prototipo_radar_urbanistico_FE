@@ -25,6 +25,175 @@ function OpenLayerMap() {
   const [sicarNumber, setSicarNumber] = useState('');
   const [coordinates, setCoordinates] = useState([]);
   const [formulario, setFormulario] = useState([]);
+  const variaveis = {
+    processo_judicial: {
+      label: "Processo Judicial",
+      options: {
+        numero_processo: "Número do Processo",
+        nome_parte_requerente: "Nome da parte Requerente",
+        nome_parte_requerida: "Nome da parte Requerida",
+        rg_requerida: "RG da parte Requerida",
+        rg_requerente: "RG da parte Requerente",
+        cpf_requerida: "CPF da parte Requerida",
+        cpf_requerente: "CPF da parte Requerente",
+        numero_carta: "Nº da Carta Precatório na Origem",
+        nomde_advogado: "Nome do Advogado",
+        oab: "OAB",
+        documento_delegacia: "Nº do Documento na Delegacia",
+        cda: "CDA",
+        classe: "Classe",
+        area: "Área",
+        assunto: "Assunto",
+        foro: "Foro",
+        fara: "Vara",
+        juiz: "Juiz",
+        confte: "Confte",
+        data_movimentacoes: "Data das Movimentações",
+        despacho: "Despacho",
+        codigo_consulta_processo: "Código de consulta do processo",
+        prazo_manifestacao_judicial: "Prazo para manifestação judicial",
+      },
+    },
+    matricula_imovel: {
+      label: "Matricula do Imóvel",
+      options: {
+        numero: "Número matrícula",
+        numero_antigo: "Número matrícula (antiga)",
+        cri: "Cartório de Registro de Imóveis (CRI)",
+        comarca: "Comarca",
+        inscricao_imobiliaria: "Inscrição Imobiliária",
+        endereco: "Endereço",
+        bairro: "Bairro",
+        regiao: "Regiao",
+        denominacao_imovel: "Denominação do Imóvel",
+        codigo_incra: "Código INCRA",
+        sicar: "SICAR",
+        sicar_sp: "SICAR-SP",
+        proprietario: "Proprietário",
+        vendedor: "Vendedor",
+        forma_aquisicao: "Forma de Aquisição",
+        data_transacao: "Data do registro da Transação",
+        ccir: "CCIR",
+      },
+    },
+    oficio: {
+      label: "Ofício",
+      options: {
+        numero: "Número do ofício",
+        orgao:
+          "Órgão ou Instituição Remetente do Ofício",
+        comentario: "Comentário sobre Ofício",
+      },
+    },
+    conhecimento_lugar: {
+      label: "Conhecimento do Lugar",
+      options: {
+        regiao: "Regiao",
+      },
+    },
+    diversas_fontes: {
+      label: "Diversas Fontes",
+      options: {
+        cpf_proprietario: "CPF do Proprietário",
+        area_imovel: "Área do Imóvel",
+        ccir: "CCIR",
+        unidade: "Unidade",
+        cnpj: "CNPJ",
+        telefone_contato: "Telefone de Contato",
+        email_contato: "E-mail de Contato",
+        possui_planta_parcelamento: "Possui Planta de Parcelamento",
+        levantamento_planialtimetrico: "Levantamento Planialtimétrico",
+        coordenada_aproxima: "Coordenadas Aproximadas do Local",
+      },
+    },
+    contrato_compra_venda: {
+      label: "Contrato de Compra e Venda",
+      options: {
+        nome_empreendimento: "Nome do Empreendimento",
+      },
+    },
+    vistoria: {
+      label: "Vistoria",
+      options: {
+        energia_eletrica: "Energia elétrica domiciliar",
+        abastecimento_agua: "Abastecimento de água",
+        coleta_tratamento_esgoto:
+          "Coleta e Tratamento de Esgoto Sanitário",
+        iluminacao_publica: "Iluminação Pública",
+        drenagem_pluvial: "Drenagem de águas pluviais",
+        pavimentacao: "Pavimentação",
+        local_parcelada:
+          "Local parcelada acessada diretamente por via pública?",
+        existencia_edificacoes: "Existência de edificações no local",
+        quantidade_aproximada_edificacoes: "Quantidade aproximada de edificações",
+        uso_constatado: "Uso Constatado",
+        ponto_atencao: "Ponto de atenção",
+        lotes_demarcados:
+          "Lotes demarcados ou fechamento da área?",
+        coleta_residuos_solidos:
+          "Existência de coleta de resíduos sólidos no local",
+        proximidade_local_transporte:
+          "Proximidade de local atendido por transporte coletivo",
+      },
+    },
+    processo_administrativo: {
+      label: "Processo Administrativo",
+      options: {
+        advogado_parte: "Advogado da Parte",
+        responsavel_tecnico_parte: "Responsável técnico da parte",
+        ponto_focal_moradores: "Ponto Focal dos Moradores",
+        notificacao: "Notificação",
+        prazo_manifestacao: "Prazo para manifestação (notificação)",
+        data_publicacao_notificacao:
+          "Data de publicação da notificação em boletim oficial (quando houver)",
+        recurso_notificacao: "Recurso de Notificação",
+        processo_reurb: "Processo de REURB (mestre)",
+      },
+    },
+    boletim_oficial: {
+      label: "Boletim Oficial",
+      options: {
+        link_publicao_edital: "Link de publicação de edital",
+      },
+    },
+    ficha_socioeconomico: {
+      label: "Ficha de Cadastramento Socioeconômico",
+      options: {
+        ficha_cadastramento_individual: "Ficha de cadastramento individual",
+      },
+    },
+    legislacao: {
+      label: "Legislação",
+      options: {
+        zona_uso: "Zona de uso",
+      },
+    },
+    datageo_ambiente: {
+      label: "DataGEO Ambiente",
+      options: {
+        AIA: "Auto de Infração Ambiental (AIA)",
+      },
+    },
+    ibge: {
+      label: "IBGE",
+      options: {
+        aglomerado_subnormal: "Aglomerado subnormal",
+        area_risco: "Área de risco - BATER",
+        cod_mun: "Cod_Mun",
+      },
+    },
+    datageo: {
+      label: "Dado Geográfico",
+      options: {
+        distancia_saude_proximo:
+          "Distância do equipamento de saúde mais próximo",
+        distancia_educacao_proximo:
+          "Distância do equipamento de educação mais próximo",
+        proximidade_local_atendido_transporte:
+          "Proximidade de local atendido por transporte coletivo",
+      },
+    },
+  };
   const [idSicar, setIdSicar] = useState('');
   const navigate = useNavigate();
   const { sicar } = useContext(AuthContext);
@@ -141,23 +310,25 @@ function OpenLayerMap() {
     setMode(newMode);
   };
 
-  const renderizarCamposNaoNulos = (objeto) =>
+  const getLabel = (chave) => {
+    const categoriaEncontrada = Object.keys(variaveis).find(categoria => variaveis[categoria].options[chave]);
+  
+    return categoriaEncontrada ? variaveis[categoriaEncontrada].options[chave] : chave;
+  }
+  
+  const renderizarCamposNaoNulos = (objeto) => 
     Object.entries(objeto).map(([chave, valor]) => {
       if (valor !== null && typeof valor === 'object') {
-        if (Object.values(valor).every((v) => v === null)) {
-          return null;
-        }
-        return renderizarCamposNaoNulos(valor);
+        return Object.values(valor).every((v) => v === null) ? null : renderizarCamposNaoNulos(valor);
       }
-      if (valor !== null) {
-        if(chave.startsWith('id'))
-          return null;
-        return <p key={chave}>{chave}: {valor}</p>;
+      if (valor !== null && !chave.startsWith('id')) {
+        const label = getLabel(chave);
+        return <p key={chave}>{label}: {valor}</p>;
       }
       return null;
     });
-
-
+  
+  
 
   return (
     <div>
